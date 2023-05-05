@@ -40,24 +40,29 @@ export class OpfPaymentVerificationComponent implements OnInit, OnDestroy {
     this.subscription = of(this.route.routeConfig?.data?.cxRoute as string)
       .pipe(
         switchMap((cxRoute) => {
+          console.log('flo cxRoute', cxRoute);
+
           return cxRoute === 'paymentVerificationResult'
-            ? this.route.queryParams
+            ? this.route?.queryParams
             : throwError('ERROR_CANCEL_LINK');
         }),
         switchMap((params) => {
+          console.log('flo params', params);
           if (!params) {
+            console.log('flo params empty');
             return throwError('ERROR_NO_PARAMS');
           }
 
           const responseMap: OpfResponseMapElement[] =
             this.opfPaymentVerificationService.getOpfResponseMap(params);
-
+          console.log('flo responseMap', responseMap);
           const paymentSessionId =
             this.opfPaymentVerificationService.findInOpfResponseMap(
               OpfPaymenVerificationUrlInput.PAYMENT_SESSION_ID,
               responseMap
             );
           if (!paymentSessionId) {
+            console.log('flo ERROR_NO_PAYMENT_SESSION_ID');
             return throwError('ERROR_NO_PAYMENT_SESSION_ID');
           }
 

@@ -17,6 +17,7 @@ export class OpfPaymentVerificationService {
 
   getOpfResponseMap(params: Params): OpfResponseMapElement[] {
     if (!params) {
+      console.log('flo no params');
       return [];
     }
     return Object.entries(params).map((pair) => {
