@@ -66,6 +66,8 @@ export class OpfPaymentVerificationComponent implements OnInit, OnDestroy {
             return throwError('ERROR_NO_PAYMENT_SESSION_ID');
           }
 
+          console.log('flo paymentSessionId', paymentSessionId);
+
           return this.opfCheckoutService.verifyPayment(paymentSessionId, {
             responseMap: [...responseMap],
           });
@@ -79,7 +81,7 @@ export class OpfPaymentVerificationComponent implements OnInit, OnDestroy {
         })
       )
       .subscribe({
-        error: () => this.onError(),
+        error: (error: any) => this.onError(error),
         next: () => this.onSuccess(),
       });
   }
@@ -88,12 +90,13 @@ export class OpfPaymentVerificationComponent implements OnInit, OnDestroy {
     this.opfPaymentVerificationService.goToPage('orderConfirmation');
   }
 
-  onError(): void {
-    this.displayError();
+  onError(error: any): void {
+    this.displayError(error);
     this.opfPaymentVerificationService.goToPage('checkoutReviewOrder');
   }
 
-  protected displayError(): void {
+  protected displayError(error: any): void {
+    console.log('flo error', error);
     this.globalMessageService.add(
       {
         key: 'opf.errorToProcessPayment',

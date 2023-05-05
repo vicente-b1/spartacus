@@ -74,6 +74,7 @@ export class OpfCheckoutService implements OpfCheckoutFacade {
     paymentSessionId: string,
     paymentVerificationPayload: OpfPaymentVerificationPayload
   ): Observable<OpfPaymentVerificationResponse> {
+    console.log('verifyPayment opf-checkout.service');
     return this.verifyPaymentCommand.execute({
       paymentSessionId,
       paymentVerificationPayload,
