@@ -1,0 +1,46 @@
+// @import 'src/styles/helpers/_module';
+
+:host {
+	> cx-hierarchy-node {
+		display: none;
+	}
+}
+
+:host(.open) {
+	> cx-hierarchy-node {
+		display: block;
+	}
+}
+
+.cx-hierarchy-node.collapsible {
+	cursor: pointer;
+	user-select: none;
+	outline: none;
+	
+	display: flex;
+	align-items: center;
+
+	&.draggable {
+		&:hover:not(:active) {
+			background-color: #eeeeee;
+		}
+	}
+
+	mat-icon {
+		flex: 0 0 auto;
+		width: 19px;
+		height: 19px;
+		font-size: small;
+		position: relative;
+		top: 3px;
+		right: -4px;
+		color: #0854a0;
+	}
+
+	.border {
+		height: 17px;
+		border-right: solid 1px #e0e0e0;
+		flex: 0 0 auto;
+		margin-right: 8px;
+	}
+}

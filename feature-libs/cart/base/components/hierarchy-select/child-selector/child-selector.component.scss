@@ -1,0 +1,24 @@
+:host {
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	overflow: hidden;
+	justify-content: space-between;
+
+	.name {
+		line-height: 24px;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.select-all {
+		height: 100%;
+		padding: 0;
+		line-height: 1.5;
+	}
+
+	.remove-all {
+		min-width: 78px;
+	}
+}
