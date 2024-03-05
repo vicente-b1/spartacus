@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 import { facadeFactory, StateUtils } from '@spartacus/core';
 import { Observable } from 'rxjs';
 import { CART_BASE_CORE_FEATURE } from '../feature-name';
-import { Cart, CartType, OrderEntry } from '../models/cart.model';
+import { Cart, CartType, EntryGroup, OrderEntry } from '../models/cart.model';
 
 @Injectable({
   providedIn: 'root',
@@ -126,6 +126,12 @@ export abstract class MultiCartFacade {
    * @param cartId
    */
   abstract getEntries(cartId: string): Observable<OrderEntry[]>;
+
+  /**
+   * Get cart entryGroups as an observable
+   * @param cartId
+   */
+  abstract getEntryGroups(cartId: string): Observable<EntryGroup[]>;
 
   /**
    * Get last entry for specific product code from cart.

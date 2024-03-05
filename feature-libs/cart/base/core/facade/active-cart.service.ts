@@ -9,6 +9,7 @@ import {
   ActiveCartFacade,
   Cart,
   CartType,
+  EntryGroup,
   MultiCartFacade,
   OrderEntry,
 } from '@spartacus/cart/base/root';
@@ -210,6 +211,16 @@ export class ActiveCartService implements ActiveCartFacade, OnDestroy {
       distinctUntilChanged()
     );
   }
+
+  /**
+   * Returns cart entry groups
+   */
+    getEntryGroups(): Observable<EntryGroup[]> {
+      return this.activeCartId$.pipe(
+        switchMap((cartId) => this.multiCartFacade.getEntryGroups(cartId)),
+        distinctUntilChanged()
+      );
+    }
 
   /**
    * Returns last cart entry for provided product code.

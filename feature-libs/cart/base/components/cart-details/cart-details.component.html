@@ -24,6 +24,23 @@
           optionalBtn: saveForLaterBtn
         }"
       ></cx-cart-item-list>
+      <!-- <cx-hierarchy-select [paddingPrefix]="12" [tree]="bundleHierarchy" (selections)="onTagsChecked($event)"> </cx-hierarchy-select> -->
+
+    <!-- <cx-hierarchy-select
+			[maxHeight]="'300px'"
+			[searchFieldEnabled]="true"
+			[searchFieldFilterByName]="'name'"
+			[searchFieldPlaceholder]="'Search currencies'"
+			[tree]="bundleHierarchy"
+			[handlers]="[statusCurrencyFilterDataManager]"
+			(selections)="onCurrencyChange($event)">
+    </cx-hierarchy-select> -->
+    <ng-container *ngIf="bundles$ | async">
+      <cx-hierarchy-select 
+      [paddingPrefix]="12" 
+      [tree]="bundleHierarchy" 
+      (selections)="onTagsChecked($event)"> </cx-hierarchy-select>
+    </ng-container>
     </div>
   </ng-container>
 </ng-container>

@@ -9,6 +9,7 @@ import { select, Store } from '@ngrx/store';
 import {
   Cart,
   CartType,
+  EntryGroup,
   MultiCartFacade,
   OrderEntry,
 } from '@spartacus/cart/base/root';
@@ -187,6 +188,17 @@ export class MultiCartService implements MultiCartFacade {
       select(MultiCartSelectors.getCartEntriesSelectorFactory(cartId))
     );
   }
+
+  /**
+   * Get cart entryGroups as an observable
+   * @param cartId
+   */
+  getEntryGroups(cartId: string): Observable<EntryGroup[]> {
+    return this.store.pipe(
+      select(MultiCartSelectors.getCartEntryGroupsSelectorFactory(cartId))
+    );
+  }
+
 
   /**
    * Get last entry for specific product code from cart.
