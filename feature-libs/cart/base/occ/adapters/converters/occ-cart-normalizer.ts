@@ -8,6 +8,8 @@ import { Injectable } from '@angular/core';
 import {
   Cart,
   ORDER_ENTRY_PROMOTIONS_NORMALIZER,
+  OrderEntryGroup,
+  OrderEntryGroupType,
 } from '@spartacus/cart/base/root';
 import {
   Converter,
@@ -38,6 +40,27 @@ export class OccCartNormalizer implements Converter<Occ.Cart, Cart> {
         ),
       }));
     }
+
+    if (source.entryGroups) {
+      const mapEntryGroups = (groups: Occ.OrderEntryGroup[]): OrderEntryGroup[] =>
+        groups.filter(group => group.type === OrderEntryGroupType.CONFIGURABLEBUNDLE).map(
+          (group) =>
+            ({
+              ...group,
+              entries: group.entries?.map(e => {
+                let entry = target?.entries?.find(entry => entry.entryNumber === e.entryNumber);
+                if(entry){
+                  entry.inBundle = true;
+                }
+                return entry;
+              }),
+              ...(group.entryGroups?.length && {
+                entryGroups: mapEntryGroups(group.entryGroups),
+              }),
+            } as OrderEntryGroup)
+        );
+      target.entryGroups = mapEntryGroups(source.entryGroups);
+          }
 
     return target;
   }

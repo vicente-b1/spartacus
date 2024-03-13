@@ -147,6 +147,7 @@ export enum AbstractOrderType {
 }
 
 export interface OrderEntry {
+  inBundle?: boolean;
   orderCode?: string;
   basePrice?: Price;
   deliveryMode?: DeliveryMode;
@@ -217,4 +218,18 @@ export interface EntryGroup {
   erroneous?: boolean;
   label?: string;
   type?: string;
+}
+
+export enum OrderEntryGroupType {
+  STANDALONE = 'STANDALONE',
+  CONFIGURABLEBUNDLE = 'CONFIGURABLEBUNDLE',
+}
+
+export interface OrderEntryGroup {
+  entryGroupNumber: number;
+  erroneous: boolean;
+  label: string;
+  type: `${OrderEntryGroupType}`;
+  entries: OrderEntry[];
+  entryGroups: OrderEntryGroup[];
 }

@@ -20,7 +20,6 @@ import { filter, map, tap } from 'rxjs/operators';
 
 import {
   CollapsibleNode,
-  CollapsibleSelectionNode,
   HierarchyNode,
   SelectionNode,
 } from '../hierarchy-select';
@@ -39,7 +38,7 @@ export class CartDetailsComponent implements OnInit {
   selectiveCartEnabled: boolean;
 
   // entryGroups$: Observable<EntryGroup[]>;
-  bundleHierarchy: CollapsibleSelectionNode = new CollapsibleSelectionNode(
+  bundleHierarchy: CollapsibleNode = new CollapsibleNode(
     'ROOT',
     { children: [] }
   );
@@ -111,6 +110,7 @@ export class CartDetailsComponent implements OnInit {
       treeNode = new CollapsibleNode(node.label, {
         children: [],
         value: node,
+        open: true,
       });
       parent.children.push(treeNode);
       node.entryGroups && node.entryGroups.length > 0

@@ -11,6 +11,7 @@ import { CollapsibleNode, LazyLoadFactory } from '../collapsible-node.model';
 import { LoadChildren, NodeEventType } from '../events';
 import { HierarchyNode } from '../hierarchy-node.model';
 import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.component';
+import { EntryGroup, OrderEntry } from 'feature-libs/cart/base/root/models';
 
 /**
  * Hierarchy Selection node variant that is collapsible
@@ -23,15 +24,12 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
 			[style.padding-left.px]="paddingPrefix"
 			(click)="toggle()"
 			[title]="tree.tooltip"
-			matTooltipPosition="right"
-			matTooltipShowDelay="1200"
 		>
 			<!-- <mat-icon *ngIf="!open">{{ 'navigation-right-arrow' | sapIcon }}</mat-icon>
 			<mat-icon *ngIf="open">{{ 'navigation-down-arrow' | sapIcon }}</mat-icon> -->
-			<span *ngIf="!open">>>123</span>
-			<span *ngIf="open">V123(down)</span>
-			<div class="border"></div>
-			<span>{{ tree.name }}</span>
+			<!-- <div class="border"></div> -->
+			<span class="leaf-node-title">{{ tree.name }}</span>
+			<span *ngIf="tree.children.length === 0; else noneLeafNode" class="leaf-node-edit">EDIT</span>
 		</div>
 		<cx-hierarchy-node
 			*ngFor="let child of tree.children; let i = index"
@@ -46,7 +44,7 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
 		<ng-container *ngIf="tree.children.length === 0" >
 		<!-- <div *ngFor="let entry of tree.value.entries">
 		{{entry.product.name}}
-		</div> 
+		</div>
 	 [cartIsLoading]="!(cartLoaded$ | async)"
 	 [promotionLocation]="promotionLocation"
 	         [options]="{
@@ -54,11 +52,16 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
           optionalBtn: saveForLaterBtn
         }"
 	-->
-		<cx-cart-item-list
-        [items]="tree.value.entries"
-
-      ></cx-cart-item-list>
+			<cx-cart-item-list
+			*ngIf="tree.value.entries.length > 0"
+			[items]="entryGroups.entries!"
+			[hasHeader]="false"
+			></cx-cart-item-list>
 		</ng-container>
+	<ng-template #noneLeafNode>
+		<div *ngIf="!open">+</div>
+		<div *ngIf="open">-</div>
+    </ng-template>
 	`,
 	styleUrls: ['../hierarchy-node/hierarchy-node.component.scss', './hierarchy-node-collapsible.component.scss'],
 })
@@ -77,12 +80,21 @@ export class HierarchyNodeCollapsibleComponent<T> extends HierarchyNodeComponent
 
 	private subTracker = new SubscriptionTracker();
 
+	orderEnrties: OrderEntry[]= [];
+
+	entryGroups: EntryGroup;
+
+
 	ngOnDestroy(): void {
 		this.subTracker.unsubscribe();
 	}
 
 	ngOnInit(): void {
 		this.lazyLoadFactory = this.tree.lazyLoadFactory;
+		this.entryGroups = this.tree.value as EntryGroup;
+		// this.tree.value.entries?.forEach((entry: OrderEntry) => {
+		// 	this.orderEnrties.push(entry);
+		// });
 	}
 
 	toggle(): void {

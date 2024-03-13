@@ -13,7 +13,6 @@ import { CustomBehaviorPlugin } from '../index';
 import { getSelectedNodes } from '../index';
 import { NodeEvent, NodeEventType, Select } from '../events';
 import { HierarchyNode } from '../hierarchy-node.model';
-import { filterHierarchy } from '../hierarchy-select.utils';
 import { SelectionNode } from '../selection-node.model';
 import { HierarchySelectEventType } from './hierarchy-select-event.enum';
 
@@ -27,9 +26,6 @@ import { HierarchySelectEventType } from './hierarchy-select-event.enum';
 	selector: 'cx-hierarchy-select',
 	template: `
 		<div *ngIf="!disabled" [style.border-bottom-width.px]="showBorderBottom ? 1 : 0">
-			<div *ngIf="searchFieldEnabled">
-				<input class="filter-search" [placeholder]="searchFieldPlaceholder" [formControl]="searchField" />
-			</div>
 			<div class="app-hierarchy-select" [ngStyle]="hierarchyStyle">
 				<cx-hierarchy-node
 					*ngFor="let child of tree.children; let i = index"
@@ -46,18 +42,6 @@ import { HierarchySelectEventType } from './hierarchy-select-event.enum';
 	styleUrls: ['./hierarchy-select.component.scss'],
 })
 export class HierarchySelectComponent<T> implements OnInit, OnChanges {
-	/**
-	 * Defines whether the search field is visible or not.
-	 */
-	@Input() searchFieldEnabled = false;
-	/**
-	 * Defines the search field placeholder. Used only when searchFieldEnabled = true.
-	 */
-	@Input() searchFieldPlaceholder = 'Search';
-	/**
-	 * Defines the field name to filter the tree. Used only when searchFieldEnabled = true.
-	 */
-	@Input() searchFieldFilterByName: string;
 
 	/**
 	 * Defines the maximum height of visible part of the tree.
@@ -146,10 +130,6 @@ export class HierarchySelectComponent<T> implements OnInit, OnChanges {
 		this.calculateShowBottom();
 		this.handleEvent(null, this.tree, HierarchySelectEventType.LOAD);
 
-		if (this.searchFieldEnabled) {
-			this.applySearchFilterdHandler(this.searchField, this.searchFieldFilterByName);
-		}
-
 		if (this.maxHeight !== undefined) {
 			this.hierarchyStyle = {
 				maxHeight: this.maxHeight,
@@ -170,21 +150,6 @@ export class HierarchySelectComponent<T> implements OnInit, OnChanges {
 		} else {
 			this.event.emit(event);
 		}
-	}
-
-	/**
-	 * Applies the handler executed for each change of search field.
-	 * Note: when the search field is cleared the parent node is showed.
-	 * @param searchField the search field control
-	 * @param filterByName the name by which filter is executed
-	 */
-	private applySearchFilterdHandler(searchField: UntypedFormControl, filterByName: string): void {
-		searchField.valueChanges.subscribe((searchText: string) => {
-			filterHierarchy(this.tree, {
-				field: filterByName,
-				value: searchText,
-			});
-		});
 	}
 
 	private calculateShowBottom(): void {

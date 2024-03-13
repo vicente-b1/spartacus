@@ -19,6 +19,7 @@
 	
 	display: flex;
 	align-items: center;
+	justify-content: space-between;
 
 	&.draggable {
 		&:hover:not(:active) {
@@ -37,10 +38,13 @@
 		color: #0854a0;
 	}
 
-	.border {
-		height: 17px;
-		border-right: solid 1px #e0e0e0;
-		flex: 0 0 auto;
-		margin-right: 8px;
+	.leaf-node-title {
+		font-weight: 700;
+	}
+
+	.leaf-node-edit {
+		color: var(--Main-Primary, #2480C5);
+		font-size: 16px;
+		text-decoration-line: underline;
 	}
 }
