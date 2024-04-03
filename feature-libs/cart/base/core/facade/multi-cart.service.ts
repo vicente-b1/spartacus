@@ -9,9 +9,9 @@ import { select, Store } from '@ngrx/store';
 import {
   Cart,
   CartType,
-  EntryGroup,
   MultiCartFacade,
   OrderEntry,
+  OrderEntryGroup,
 } from '@spartacus/cart/base/root';
 import { isNotUndefined, StateUtils, UserIdService } from '@spartacus/core';
 import { Observable, of, timer } from 'rxjs';
@@ -190,14 +190,26 @@ export class MultiCartService implements MultiCartFacade {
   }
 
   /**
-   * Get cart entryGroups as an observable
+   * Get standalone cart entries as an observable
    * @param cartId
    */
-  getEntryGroups(cartId: string): Observable<EntryGroup[]> {
+  getStandaloneEntries(cartId: string): Observable<OrderEntry[]> {
+    return this.store.pipe(
+      select(MultiCartSelectors.getStandaloneCartEntriesSelectorFactory(cartId))
+    );
+  }
+
+
+  /**
+   * Get cart entry groups as an observable
+   * @param cartId
+   */
+  getBundleEntryGroups(cartId: string): Observable<OrderEntryGroup[]> {
     return this.store.pipe(
       select(MultiCartSelectors.getCartEntryGroupsSelectorFactory(cartId))
     );
   }
+
 
 
   /**

@@ -5,7 +5,9 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
-
+import {
+	IconModule,
+  } from '@spartacus/storefront';
 import { RenderContentDirectiveModule } from './render-content/render-content.directive.module';
 // import { UpscaleMaterialModule } from 'app/shared/upscale-material/upscale-material.module';
 // import { PipesModule } from '../pipes/pipes.module';
@@ -18,12 +20,13 @@ import { HierarchyNodeComponent } from './hierarchy-node/hierarchy-node.componen
 import { HierarchyNodeSelectionComponent } from './hierarchy-node-selection/hierarchy-node-selection.component';
 import { HierarchyNodeTitleComponent } from './hierarchy-node-title/hierarchy-node-title.component';
 import { HierarchySelectComponent } from './hierarchy-select/hierarchy-select.component';
-import { CartSharedModule } from '../cart-shared/cart-shared.module';
+import { CartSharedModule } from '../cart-shared';
+
 
 @NgModule({
 	imports: [ReactiveFormsModule,
 		//  UpscaleMaterialModule,
-		 ChildSelectorComponentModule, CommonModule, FormsModule, RenderContentDirectiveModule, CartSharedModule
+		 ChildSelectorComponentModule, CommonModule, FormsModule, RenderContentDirectiveModule,IconModule, CartSharedModule
 		//  PipesModule
 		],
 	exports: [HierarchySelectComponent, HierarchyCollapsibleSelectionComponent, HierarchyNodeComponent],

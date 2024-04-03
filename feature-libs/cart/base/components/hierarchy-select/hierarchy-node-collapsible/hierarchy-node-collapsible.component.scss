@@ -1,50 +1,49 @@
 // @import 'src/styles/helpers/_module';
 
 :host {
-	> cx-hierarchy-node {
-		display: none;
-	}
+  > cx-hierarchy-node {
+    display: none;
+  }
 }
 
 :host(.open) {
-	> cx-hierarchy-node {
-		display: block;
-	}
+  > cx-hierarchy-node {
+    display: block;
+  }
+}
+
+:host ::ng-deep cx-cart-item-list table {
+  margin: 0;
 }
 
 .cx-hierarchy-node.collapsible {
-	cursor: pointer;
-	user-select: none;
-	outline: none;
-	
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+  outline: none;
 
-	&.draggable {
-		&:hover:not(:active) {
-			background-color: #eeeeee;
-		}
-	}
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 12px;
+  font-size: 14px;
 
-	mat-icon {
-		flex: 0 0 auto;
-		width: 19px;
-		height: 19px;
-		font-size: small;
-		position: relative;
-		top: 3px;
-		right: -4px;
-		color: #0854a0;
-	}
+  &.draggable {
+    &:hover:not(:active) {
+      background-color: #eeeeee;
+    }
+  }
 
-	.leaf-node-title {
-		font-weight: 700;
-	}
+  .tree-icon {
+    color: var(--Main-Secondary, #a1aabf);
+  }
 
-	.leaf-node-edit {
-		color: var(--Main-Primary, #2480C5);
-		font-size: 16px;
-		text-decoration-line: underline;
-	}
+  .leaf-node-title {
+    font-weight: 700;
+  }
+
+  .leaf-node-edit {
+    color: var(--Main-Primary, #2480c5);
+    font-size: 16px;
+    text-decoration-line: underline;
+  }
 }

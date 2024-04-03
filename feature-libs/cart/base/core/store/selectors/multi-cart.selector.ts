@@ -9,7 +9,7 @@ import {
   createSelector,
   MemoizedSelector,
 } from '@ngrx/store';
-import { Cart, EntryGroup, OrderEntry } from '@spartacus/cart/base/root';
+import { Cart, OrderEntryGroup, OrderEntry } from '@spartacus/cart/base/root';
 import { StateUtils } from '@spartacus/core';
 import {
   MultiCartState,
@@ -90,11 +90,19 @@ export const getCartEntrySelectorFactory = (
   );
 };
 
+export const getStandaloneCartEntriesSelectorFactory = (
+  cartId: string
+): MemoizedSelector<StateWithMultiCart, OrderEntry[]> => {
+  return createSelector(getCartSelectorFactory(cartId), (state: Cart) => {
+    return state && state.entries ? state.entries.filter(state => !state.inBundle) : [];
+  });
+};
+
 export const getCartEntryGroupsSelectorFactory = (
   cartId: string
-): MemoizedSelector<StateWithMultiCart, EntryGroup[]> => {
+): MemoizedSelector<StateWithMultiCart, OrderEntryGroup[]> => {
   return createSelector(getCartSelectorFactory(cartId), (state: Cart) => {
-    return state?.entryGroups ?? [];
+    return state && state.entryGroups ? state.entryGroups : [];
   });
 };
 

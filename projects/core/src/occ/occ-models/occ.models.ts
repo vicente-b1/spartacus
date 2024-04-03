@@ -1124,7 +1124,7 @@ export namespace Occ {
     type: string;
     entries: OrderEntry[];
     entryGroups: OrderEntryGroup[];
-  }  
+  }
 
   /**
    *

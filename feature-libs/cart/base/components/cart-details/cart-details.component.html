@@ -1,5 +1,6 @@
 <ng-container *ngIf="cart$ | async as cart">
-  <ng-container *ngIf="entries$ | async as entries">
+  <!-- <ng-container *ngIf="entries$ | async as entries"> -->
+    <ng-container *ngIf="{entries: entries$ | async, entryGroups: entryGroups$ | async, standaloneEntries: standaloneEntries$ | async} as data">
     <div *ngIf="cart.totalItems > 0" class="cart-details-wrapper">
       <cx-cart-validation-warnings></cx-cart-validation-warnings>
 
@@ -15,8 +16,9 @@
         "
       ></cx-promotions>
 
+      <!-- *ngIf="standaloneEntries$ | async as standaloneEntries" -->
       <cx-cart-item-list
-        [items]="entries"
+        [items]="data.standaloneEntries"
         [cartIsLoading]="!(cartLoaded$ | async)"
         [promotionLocation]="promotionLocation"
         [options]="{
@@ -24,25 +26,17 @@
           optionalBtn: saveForLaterBtn
         }"
       ></cx-cart-item-list>
-      <!-- <cx-hierarchy-select [paddingPrefix]="12" [tree]="bundleHierarchy" (selections)="onTagsChecked($event)"> </cx-hierarchy-select> -->
 
-    <!-- <cx-hierarchy-select
-			[maxHeight]="'300px'"
-			[searchFieldEnabled]="true"
-			[searchFieldFilterByName]="'name'"
-			[searchFieldPlaceholder]="'Search currencies'"
-			[tree]="bundleHierarchy"
-			[handlers]="[statusCurrencyFilterDataManager]"
-			(selections)="onCurrencyChange($event)">
-    </cx-hierarchy-select> -->
-    <ng-container *ngIf="bundles$ | async">
-      <cx-hierarchy-select 
-      [paddingPrefix]="12" 
-      [tree]="bundleHierarchy" 
-      (selections)="onTagsChecked($event)"> </cx-hierarchy-select>
-    </ng-container>
     </div>
   </ng-container>
+  <!-- <ng-container *ngIf="data.entryGroups$ | async"> -->
+    <cx-hierarchy-select 
+    [paddingPrefix]="12" 
+    [tree]="bundleHierarchy" 
+    (selections)="onTagsChecked($event)"> 
+  </cx-hierarchy-select>
+  <!-- </ng-container> -->
+   
 </ng-container>
 
 <ng-template let-ctx #saveForLaterBtn>

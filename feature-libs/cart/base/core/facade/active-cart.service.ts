@@ -9,9 +9,9 @@ import {
   ActiveCartFacade,
   Cart,
   CartType,
-  EntryGroup,
   MultiCartFacade,
   OrderEntry,
+  OrderEntryGroup,
 } from '@spartacus/cart/base/root';
 import {
   OAUTH_REDIRECT_FLOW_KEY,
@@ -213,14 +213,24 @@ export class ActiveCartService implements ActiveCartFacade, OnDestroy {
   }
 
   /**
+   * Returns cart entries
+   */
+  getStandaloneEntries(): Observable<OrderEntry[]> {
+    return this.activeCartId$.pipe(
+      switchMap((cartId) => this.multiCartFacade.getStandaloneEntries(cartId)),
+      distinctUntilChanged()
+    );
+  }
+
+  /**
    * Returns cart entry groups
    */
-    getEntryGroups(): Observable<EntryGroup[]> {
-      return this.activeCartId$.pipe(
-        switchMap((cartId) => this.multiCartFacade.getEntryGroups(cartId)),
-        distinctUntilChanged()
-      );
-    }
+  getBundleEntryGroups(): Observable<OrderEntryGroup[]> {
+    return this.activeCartId$.pipe(
+      switchMap((cartId) => this.multiCartFacade.getBundleEntryGroups(cartId)),
+      distinctUntilChanged()
+    );
+  }
 
   /**
    * Returns last cart entry for provided product code.
