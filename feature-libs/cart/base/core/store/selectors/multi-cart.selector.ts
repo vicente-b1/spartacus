@@ -9,7 +9,7 @@ import {
   createSelector,
   MemoizedSelector,
 } from '@ngrx/store';
-import { Cart, OrderEntryGroup, OrderEntry } from '@spartacus/cart/base/root';
+import { Cart, OrderEntry, OrderEntryGroup } from '@spartacus/cart/base/root';
 import { StateUtils } from '@spartacus/core';
 import {
   MultiCartState,
@@ -78,18 +78,6 @@ export const getCartEntriesSelectorFactory = (
   });
 };
 
-export const getCartEntrySelectorFactory = (
-  cartId: string,
-  productCode: string
-): MemoizedSelector<StateWithMultiCart, OrderEntry | undefined> => {
-  return createSelector(
-    getCartEntriesSelectorFactory(cartId),
-    (state: OrderEntry[]) => {
-      return state.find((entry) => entry.product?.code === productCode);
-    }
-  );
-};
-
 export const getStandaloneCartEntriesSelectorFactory = (
   cartId: string
 ): MemoizedSelector<StateWithMultiCart, OrderEntry[]> => {
@@ -104,6 +92,18 @@ export const getCartEntryGroupsSelectorFactory = (
   return createSelector(getCartSelectorFactory(cartId), (state: Cart) => {
     return state && state.entryGroups ? state.entryGroups : [];
   });
+};
+
+export const getCartEntrySelectorFactory = (
+  cartId: string,
+  productCode: string
+): MemoizedSelector<StateWithMultiCart, OrderEntry | undefined> => {
+  return createSelector(
+    getCartEntriesSelectorFactory(cartId),
+    (state: OrderEntry[]) => {
+      return state.find((entry) => entry.product?.code === productCode);
+    }
+  );
 };
 
 export const getCartsSelectorFactory: MemoizedSelector<

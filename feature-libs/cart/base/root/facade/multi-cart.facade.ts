@@ -36,6 +36,7 @@ import { Cart, CartType, OrderEntry, OrderEntryGroup } from '../models/cart.mode
         'deleteCart',
         'reloadCart',
         'getCartIdByType',
+        'removeEntryGroup',
       ],
       async: true,
     }),
@@ -264,4 +265,14 @@ export abstract class MultiCartFacade {
    * @param cartType
    */
   abstract getCartIdByType(cartType: CartType): Observable<string>;
+
+  /**
+   * Remove entry group from cart
+   *
+   * @param userId
+   * @param cartId
+   * @param entryGroupNumber
+   */
+  abstract removeEntryGroup(userId: string, cartId: string, entryGroupNumber: number): void;
+  
 }

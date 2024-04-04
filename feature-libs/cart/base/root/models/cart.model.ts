@@ -147,7 +147,6 @@ export enum AbstractOrderType {
 }
 
 export interface OrderEntry {
-  inBundle?: boolean;
   orderCode?: string;
   basePrice?: Price;
   deliveryMode?: DeliveryMode;
@@ -162,6 +161,16 @@ export interface OrderEntry {
   cancelledItemsPrice?: Price;
   cancellableQuantity?: number;
   promotions?: PromotionResult[];
+  inBundle?: boolean;
+}
+
+export interface OrderEntryGroup {
+  entryGroupNumber?: number;
+  erroneous?: boolean;
+  label?: string;
+  type?: `${OrderEntryGroupType}`;
+  entries?: OrderEntry[];
+  entryGroups?: OrderEntryGroup[];
 }
 
 export interface PickupOrderEntryGroup {
@@ -199,6 +208,11 @@ export enum CartType {
   NEW_CREATED = 'NewCreated',
 }
 
+export enum OrderEntryGroupType {
+  STANDALONE = 'STANDALONE',
+  CONFIGURABLEBUNDLE = 'CONFIGURABLEBUNDLE',
+}
+
 export interface CartModificationList {
   cartModifications?: CartModification[];
 }
@@ -209,18 +223,4 @@ export enum CartValidationStatusCode {
   REVIEW_CONFIGURATION = 'reviewConfiguration',
   PRICING_ERROR = 'pricingError',
   UNRESOLVABLE_ISSUES = 'unresolvableIssues',
-}
-
-export enum OrderEntryGroupType {
-  STANDALONE = 'STANDALONE',
-  CONFIGURABLEBUNDLE = 'CONFIGURABLEBUNDLE',
-}
-
-export interface OrderEntryGroup {
-  entryGroupNumber: number;
-  erroneous: boolean;
-  label: string;
-  type: `${OrderEntryGroupType}`;
-  entries: OrderEntry[];
-  entryGroups: OrderEntryGroup[];
 }

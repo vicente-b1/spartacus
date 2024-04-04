@@ -232,6 +232,7 @@ export class ActiveCartService implements ActiveCartFacade, OnDestroy {
     );
   }
 
+
   /**
    * Returns last cart entry for provided product code.
    * Needed to cover processes where multiple entries can share the same product code
@@ -637,6 +638,23 @@ export class ActiveCartService implements ActiveCartFacade, OnDestroy {
         entries.filter((entry) => entry.deliveryPointOfService === undefined)
       )
     );
+  }
+
+  /**
+   * Remove entry group
+   *
+   * @param entryGroup
+   */
+  removeEntryGroup(entryGroup: OrderEntryGroup): void {
+    this.activeCartId$
+      .pipe(withLatestFrom(this.userIdService.getUserId()), take(1))
+      .subscribe(([cartId, userId]) => {
+        this.multiCartFacade.removeEntryGroup(
+          userId,
+          cartId,
+          entryGroup.entryGroupNumber
+        );
+      });
   }
 
   ngOnDestroy(): void {

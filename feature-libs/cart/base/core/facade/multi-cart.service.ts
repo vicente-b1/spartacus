@@ -11,7 +11,7 @@ import {
   CartType,
   MultiCartFacade,
   OrderEntry,
-  OrderEntryGroup,
+  OrderEntryGroup
 } from '@spartacus/cart/base/root';
 import { isNotUndefined, StateUtils, UserIdService } from '@spartacus/core';
 import { Observable, of, timer } from 'rxjs';
@@ -209,8 +209,6 @@ export class MultiCartService implements MultiCartFacade {
       select(MultiCartSelectors.getCartEntryGroupsSelectorFactory(cartId))
     );
   }
-
-
 
   /**
    * Get last entry for specific product code from cart.
@@ -421,4 +419,21 @@ export class MultiCartService implements MultiCartFacade {
       distinctUntilChanged()
     );
   }
+
+  /**
+   * Remove entry group from cart
+   *
+   * @param userId
+   * @param cartId
+   * @param entryGroupNumber
+   */
+  removeEntryGroup(userId: string, cartId: string, entryGroupNumber: number): void {
+    this.store.dispatch(
+      new CartActions.CartRemoveEntryGroup({
+        userId,
+        cartId,
+        entryGroupNumber: `${entryGroupNumber}`,
+      })
+    );
+  }  
 }
