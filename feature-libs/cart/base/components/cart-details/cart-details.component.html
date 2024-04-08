@@ -26,13 +26,24 @@
           optionalBtn: saveForLaterBtn
         }"
       ></cx-cart-item-list>
+
+
         <!-- <ng-container *ngIf="data.entryGroups$ | async"> -->
-    <cx-hierarchy-select 
-    [paddingPrefix]="12" 
-    [tree]="bundleHierarchy" 
-    (selections)="onTagsChecked($event)"> 
-  </cx-hierarchy-select>
-  <!-- </ng-container> -->
+          <ng-container
+          *ngIf="bundles$ | async as bundles" 
+          >
+          <!-- {{hack(bundles) | json}} -->
+          <ng-container
+          *ngFor="let bundle of bundles; index as i"
+          >
+          <!-- {{i}} + {{bundle}} -->
+              <cx-hierarchy-select 
+              [paddingPrefix]="12" 
+              [tree]="bundle" 
+              (selections)="onTagsChecked($event)"> 
+            </cx-hierarchy-select>
+          </ng-container>
+  </ng-container>
 
     </div>
   </ng-container>

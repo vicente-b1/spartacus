@@ -38,12 +38,9 @@ export class CartDetailsComponent implements OnInit {
   loggedIn = false;
   promotionLocation: PromotionLocation = PromotionLocation.ActiveCart;
   selectiveCartEnabled: boolean;
+  bundles$: Observable<CollapsibleNode[]>;
 
-  bundleHierarchy: CollapsibleNode = new CollapsibleNode('ROOT', {
-    children: [],
-  });
   entryGroups$: Observable<OrderEntryGroup[]>;
-  bundles$: Observable<OrderEntryGroup[]>;
 
   constructor(
     protected activeCartService: ActiveCartFacade,
@@ -64,11 +61,16 @@ export class CartDetailsComponent implements OnInit {
       .getStandaloneEntries()
       .pipe(filter((entries) => entries.length > 0));
 
-    this.entryGroups$ = this.activeCartService
-      .getBundleEntryGroups()
-      .pipe(filter((groups) => groups.length > 0),
-        tap((entryGroups) =>
-        this.prePrareBundleHierarchy(entryGroups, this.bundleHierarchy)
+    this.bundles$ = this.activeCartService.getBundleEntryGroups().pipe(
+      filter((groups) => groups.length > 0),
+      map((entryGroups) =>
+        entryGroups.map((entryGroup) => {
+          const root = new CollapsibleNode('ROOT', {
+            children: [],
+          });
+          this.prepareBundle([entryGroup], root);
+          return root;
+        })
       )
     );
 
@@ -95,13 +97,20 @@ export class CartDetailsComponent implements OnInit {
     console.log('onTagsChecked', _tags);
   }
 
-  prePrareBundleHierarchy(
-    nodes: OrderEntryGroup[],
+  hack(val: any) {
+    return Array.from(val);
+  }
+
+  prepareBundle(
+    nodes: OrderEntryGroup[] | undefined,
     parent: HierarchyNode,
     count: number = 0
   ): void {
+    if (!nodes) {
+      return;
+    }
     let treeNode: HierarchyNode<any, any>;
-    nodes.map((node) => {
+    nodes.forEach((node) => {
       if (count === 0) {
         treeNode = new TitleNode(node.label, {
           children: [],
@@ -119,9 +128,8 @@ export class CartDetailsComponent implements OnInit {
         parent.children.push(treeNode);
       }
       count++;
-      // parent.children.push(treeNode);
       node.entryGroups && node.entryGroups.length > 0
-        ? this.prePrareBundleHierarchy(node.entryGroups, treeNode, count)
+        ? this.prepareBundle(node.entryGroups, treeNode, count)
         : [];
     });
   }
