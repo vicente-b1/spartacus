@@ -21,12 +21,13 @@ import { HierarchyNodeSelectionComponent } from './hierarchy-node-selection/hier
 import { HierarchyNodeTitleComponent } from './hierarchy-node-title/hierarchy-node-title.component';
 import { HierarchySelectComponent } from './hierarchy-select/hierarchy-select.component';
 import { CartSharedModule } from '../cart-shared';
+import { I18nModule } from '@spartacus/core';
 
 
 @NgModule({
 	imports: [ReactiveFormsModule,
 		//  UpscaleMaterialModule,
-		 ChildSelectorComponentModule, CommonModule, FormsModule, RenderContentDirectiveModule,IconModule, CartSharedModule
+		 ChildSelectorComponentModule, CommonModule, FormsModule, RenderContentDirectiveModule,IconModule, CartSharedModule, I18nModule
 		//  PipesModule
 		],
 	exports: [HierarchySelectComponent, HierarchyCollapsibleSelectionComponent, HierarchyNodeComponent],

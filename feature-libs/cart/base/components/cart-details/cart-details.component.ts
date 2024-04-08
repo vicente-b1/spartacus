@@ -102,13 +102,10 @@ export class CartDetailsComponent implements OnInit {
   }
 
   prepareBundle(
-    nodes: OrderEntryGroup[] | undefined,
+    nodes: OrderEntryGroup[],
     parent: HierarchyNode,
     count: number = 0
   ): void {
-    if (!nodes) {
-      return;
-    }
     let treeNode: HierarchyNode<any, any>;
     nodes.forEach((node) => {
       if (count === 0) {

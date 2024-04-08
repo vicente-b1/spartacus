@@ -511,6 +511,22 @@ describe('ActiveCartService', () => {
     });
   });
 
+  describe('removeEntryGroup', () => {
+    it('should call multiCartFacade removeEntryGroup method with active cart', () => {
+      userId$.next('userId');
+      service['activeCartId$'] = of('cartId');
+      spyOn(multiCartFacade, 'removeEntryGroup').and.callThrough();
+
+      service.removeEntryGroup(3);
+
+      expect(multiCartFacade['removeEntryGroup']).toHaveBeenCalledWith(
+        'userId',
+        'cartId',
+        3
+      );
+    });
+  });
+
   describe('updateEntry', () => {
     it('should call multiCartFacade update entry method with active cart', () => {
       userId$.next('userId');

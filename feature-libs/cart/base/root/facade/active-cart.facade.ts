@@ -196,7 +196,7 @@ export abstract class ActiveCartFacade {
   /**
    * Remove entry group
    *
-   * @param entryGroup
+   * @param entryGroupNumber
    */
-  abstract removeEntryGroup(entryGroup: OrderEntryGroup): void;
+  abstract removeEntryGroup(entryGroupNumber: number): void;
 }

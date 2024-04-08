@@ -7,7 +7,6 @@ import { Subject, Subscription, timer } from 'rxjs';
 import { buffer, take } from 'rxjs/operators';
 
 import { UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
-// import { CollapsibleNode } from '@spartacus/cart/hierarchy-select';
 import { CollapsibleNode } from '../index';
 import { CustomBehaviorPlugin } from '../index';
 import { getSelectedNodes } from '../index';
@@ -25,9 +24,9 @@ import { HierarchySelectEventType } from './hierarchy-select-event.enum';
 	providers: [],
 	selector: 'cx-hierarchy-select',
 	template: `
-		<div *ngIf="!disabled" [style.border-bottom-width.px]="showBorderBottom ? 1 : 0">
+		<div [attr.id]="'bundle-' + tree.children[0].value.entryGroupNumber" *ngIf="!disabled" [style.border-bottom-width.px]="showBorderBottom ? 1 : 0">
 			<div class="cx-hierarchy-select" [ngStyle]="hierarchyStyle">
-				<cx-hierarchy-node
+				<cx-hierarchy-node					
 					*ngFor="let child of tree.children; let i = index"
 					[tree]="child"
 					[paddingPrefix]="paddingPrefix"
@@ -106,7 +105,7 @@ export class HierarchySelectComponent<T> implements OnInit, OnChanges {
 	constructor(private fb: UntypedFormBuilder) {
 		this.searchField = this.fb.control('');
 	}
-
+	  
 	/**
 	 * Handler for selection toggle events.  Finds all selections and emits them.
 	 */
