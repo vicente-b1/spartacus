@@ -97,10 +97,6 @@ export class CartDetailsComponent implements OnInit {
     console.log('onTagsChecked', _tags);
   }
 
-  hack(val: any) {
-    return Array.from(val);
-  }
-
   prepareBundle(
     nodes: OrderEntryGroup[],
     parent: HierarchyNode,

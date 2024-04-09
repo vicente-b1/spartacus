@@ -26,9 +26,12 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
       [title]="tree.tooltip"
     >
       <span class="leaf-node-title">{{ tree.name }}</span>
-      <span
-        *ngIf="tree.children.length === 0; else noneLeafNode"
-        class="leaf-node-edit">EDIT</span>
+
+      <button *ngIf="tree.children.length === 0; else noneLeafNode"
+        (click)="editBundle(tree.value.entryGroupNumber)" class="btn btn-tertiary" type="button">
+        {{ 'common.edit' | cxTranslate }}
+      </button>   
+
     </div>
     <cx-hierarchy-node
       *ngFor="let child of tree.children; let i = index"
@@ -132,5 +135,9 @@ export class HierarchyNodeCollapsibleComponent<T>
 
       this.collapsibleToggle.emit(this.tree);
     }
+  }
+
+  editBundle(entryGroupNumber: number) {
+    console.log('editBundle: ', entryGroupNumber);
   }
 }
