@@ -14,5 +14,3 @@ export { CollapsibleSelectAllNode } from './collapsible-select-all-node.model';
 export { CustomBehaviorPlugin } from './custom-behavior-plugin.interface';
 
 export * from './hierarchy-select.utils';
-
-// export * from '../hierarchy-select/plugins';

@@ -6,7 +6,7 @@ import { CollapsibleSelectAllNode } from './collapsible-select-all-node.model';
 import { CollapsibleSelectionNode } from './collapsible-selection-node.model';
 import { HierarchyNode } from './hierarchy-node.model';
 import { SelectionNode } from './selection-node.model';
-import { filterHierarchy, getSelectedNodes, hasMatch } from './hierarchy-select.utils';
+import { getSelectedNodes } from './hierarchy-select.utils';
 
 const newCollapsibleSelectionNode = (value: string, overrides: Partial<CollapsibleSelectionNode> = {}): CollapsibleSelectionNode =>
 	new CollapsibleSelectionNode(value, {
@@ -50,66 +50,6 @@ const hierarchyRoot = new HierarchyNode<string>('root', {
 			],
 		}),
 	],
-});
-
-describe('filterHierarchy', () => {
-	it('should expand all nodes which match the search criteria, or are the ancestor of a match. should hide/collapse all others', () => {
-		const filteredHierarchy = new HierarchyNode<string>('root', {
-			children: [
-				newCollapsibleSelectionNode(value1, {
-					open: true,
-					children: [
-						newCollapsibleSelectionNode(value2, {
-							open: true,
-							children: [
-								newCollapsibleSelectionNode(value3, {
-									children: [
-										newCollapsibleSelectionNode(value4, {
-											hidden: true,
-											children: [
-												newCollapsibleSelectionNode(value5, {
-													hidden: true,
-												}),
-											],
-										}),
-										newCollapsibleSelectionNode(value5, {
-											hidden: true,
-										}),
-									],
-								}),
-								newCollapsibleSelectionNode(value4, {
-									hidden: true,
-									children: [
-										newCollapsibleSelectionNode(value5, {
-											hidden: true,
-										}),
-									],
-								}),
-							],
-						}),
-						newCollapsibleSelectionNode(value3, {
-							children: [
-								newCollapsibleSelectionNode(value4, {
-									hidden: true,
-									children: [
-										newCollapsibleSelectionNode(value5, {
-											hidden: true,
-										}),
-									],
-								}),
-								newCollapsibleSelectionNode(value5, {
-									hidden: true,
-								}),
-							],
-						}),
-					],
-				}),
-			],
-		});
-
-		filterHierarchy(hierarchyRoot, { field: 'name', value: 'node3' });
-		expect(hierarchyRoot).toEqual(filteredHierarchy);
-	});
 });
 
 describe('resetHierarchy', () => {
@@ -215,63 +155,5 @@ describe('getSelectedNodes', () => {
 
 		expect(selectedNodes).toEqual([root.children[1]] as Array<SelectionNode>);
 		expect(selectedNodes[0] instanceof CollapsibleSelectAllNode).toBeFalsy();
-	});
-});
-
-describe('hasMatch', () => {
-	it('should match value if value has criteria field with value containing criteria value', () => {
-		const searchCriteria = {
-			field: 'name',
-			value: 'ab',
-		};
-
-		const valueToCheck = {
-			name: 'Absolutely matches',
-		};
-
-		const matches = hasMatch(valueToCheck, searchCriteria);
-
-		expect(matches).toBe(true);
-	});
-
-	it('should match value if value is string which contains criteria value', () => {
-		const searchCriteria = {
-			field: '',
-			value: 'ab',
-		};
-
-		const valueToCheck = 'Absolutely matches';
-
-		const matches = hasMatch(valueToCheck, searchCriteria);
-
-		expect(matches).toBe(true);
-	});
-
-	it('should not match value, value criteria field does not contain criteria value', () => {
-		const searchCriteria = {
-			field: 'name',
-			value: 'ab',
-		};
-
-		const valueToCheck = {
-			name: 'Does not match',
-		};
-
-		const matches = hasMatch(valueToCheck, searchCriteria);
-
-		expect(matches).toBe(false);
-	});
-
-	it('should not match value, value does not contain criteria value', () => {
-		const searchCriteria = {
-			field: '',
-			value: 'ab',
-		};
-
-		const valueToCheck = 'Does not match';
-
-		const matches = hasMatch(valueToCheck, searchCriteria);
-
-		expect(matches).toBe(false);
 	});
 });
