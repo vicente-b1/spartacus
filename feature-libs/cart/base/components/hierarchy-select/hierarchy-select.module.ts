@@ -8,7 +8,6 @@ import { NgModule } from '@angular/core';
 import { IconModule } from '@spartacus/storefront';
 import { RenderContentDirectiveModule } from './render-content/render-content.directive.module';
 
-import { ChildSelectorComponentModule } from './child-selector';
 import { HierarchyNodeCollapsibleComponent } from './hierarchy-node-collapsible/hierarchy-node-collapsible.component';
 import { HierarchyNodeComponent } from './hierarchy-node/hierarchy-node.component';
 import { HierarchyNodeTitleComponent } from './hierarchy-node-title/hierarchy-node-title.component';
@@ -19,7 +18,6 @@ import { I18nModule } from '@spartacus/core';
 @NgModule({
 	imports: [
 		ReactiveFormsModule, 
-		ChildSelectorComponentModule, 
 		CommonModule, 
 		FormsModule, 
 		RenderContentDirectiveModule,
