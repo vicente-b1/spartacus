@@ -23,13 +23,15 @@
           isSaveForLater: false,
           optionalBtn: saveForLaterBtn
         }"
+        [class.emptyList]="!data.standaloneEntries"
       ></cx-cart-item-list>
 
       <ng-container *ngFor="let bundle of bundles$ | async">
           <cx-hierarchy-select 
             [paddingPrefix]="12" 
             [tree]="bundle" 
-            (selections)="onTagsChecked($event)"> 
+            (selections)="onTagsChecked($event)"
+            > 
           </cx-hierarchy-select>
       </ng-container>
     </div>

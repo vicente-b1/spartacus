@@ -26,7 +26,7 @@ import { HierarchySelectEventType } from './hierarchy-select-event.enum';
 	template: `
 		<div [attr.id]="'bundle-' + tree.children[0].value.entryGroupNumber" *ngIf="!disabled" [style.border-bottom-width.px]="showBorderBottom ? 1 : 0">
 			<div class="cx-hierarchy-select" [ngStyle]="hierarchyStyle">
-				<cx-hierarchy-node					
+				<cx-hierarchy-node
 					*ngFor="let child of tree.children; let i = index"
 					[tree]="child"
 					[paddingPrefix]="paddingPrefix"

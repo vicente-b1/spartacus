@@ -30,7 +30,7 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
       <button *ngIf="tree.children.length === 0; else noneLeafNode"
         (click)="editBundle(tree.value.entryGroupNumber)" class="btn btn-tertiary" type="button">
         {{ 'common.edit' | cxTranslate }}
-      </button>   
+      </button>
 
     </div>
     <cx-hierarchy-node
