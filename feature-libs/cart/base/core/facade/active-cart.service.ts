@@ -657,6 +657,31 @@ export class ActiveCartService implements ActiveCartFacade, OnDestroy {
       });
   }
 
+  /**
+   * Remove entry group
+   *
+   * @param entryGroupNumber
+   * @param productCode
+   * @param quantity
+   */
+  addToEntryGroup(
+    entryGroupNumber: number, 
+    productCode: string, 
+    quantity: number = 1
+  ): void {
+    this.requireLoadedCart()
+    .pipe(withLatestFrom(this.userIdService.getUserId()))
+    .subscribe(([cart, userId]) => {
+      this.multiCartFacade.addToEntryGroup(
+        userId,
+        getCartIdByUserId(cart, userId),
+        entryGroupNumber,
+        productCode,
+        quantity,
+      );
+    });
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }

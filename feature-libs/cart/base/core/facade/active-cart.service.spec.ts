@@ -494,6 +494,26 @@ describe('ActiveCartService', () => {
     });
   });
 
+  describe('addToEntryGroup', () => {
+    it('should just add to entry group after cart is provided', () => {
+      spyOn<any>(service, 'requireLoadedCart').and.returnValue(
+        of({ code: 'code', guid: 'guid' })
+      );
+      spyOn(multiCartFacade, 'addToEntryGroup').and.callThrough();
+      userId$.next(OCC_USER_ID_ANONYMOUS);
+
+      service.addToEntryGroup(1, 'productCode', 2);
+
+      expect(multiCartFacade['addToEntryGroup']).toHaveBeenCalledWith(
+        OCC_USER_ID_ANONYMOUS,
+        'guid',
+        1,
+        'productCode',
+        2
+      );
+    });
+  });
+
   describe('removeEntry', () => {
     it('should call multiCartFacade remove entry method with active cart', () => {
       userId$.next('userId');

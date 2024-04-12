@@ -9,6 +9,7 @@ import { Injectable } from '@angular/core';
 import { CartEntryGroupAdapter } from '@spartacus/cart/base/core';
 import { ConverterService, OccEndpointsService } from '@spartacus/core';
 import { Observable } from 'rxjs';
+import { CartModification, CART_MODIFICATION_NORMALIZER } from '@spartacus/cart/base/root';
 
 @Injectable()
 export class OccCartEntryGroupAdapter implements CartEntryGroupAdapter {
@@ -21,7 +22,7 @@ export class OccCartEntryGroupAdapter implements CartEntryGroupAdapter {
   public remove(
     userId: string,
     cartId: string,
-    entryGroupNumber: string
+    entryGroupNumber: number
   ): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -36,5 +37,30 @@ export class OccCartEntryGroupAdapter implements CartEntryGroupAdapter {
     });
 
     return this.http.delete(url, { headers });
+  }
+
+  public addTo(
+    userId: string,
+    cartId: string,
+    entryGroupNumber: number,
+    productCode: string,
+    quantity: number = 1
+  ): Observable<CartModification> {
+    const url = this.occEndpointsService.buildUrl('addToEntryGroup', {
+      urlParams: { userId, cartId, entryGroupNumber },
+    });
+
+    const toAdd = {
+      quantity,
+      product: { code: productCode }
+    };
+
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+
+    return this.http
+      .post<CartModification>(url, toAdd, { headers })
+      .pipe(this.converterService.pipeable(CART_MODIFICATION_NORMALIZER));
   }
 }

@@ -199,4 +199,16 @@ export abstract class ActiveCartFacade {
    * @param entryGroupNumber
    */
   abstract removeEntryGroup(entryGroupNumber: number): void;
+
+  /**
+   * Add entry to entry group
+   *
+   * @param entryGroupNumber
+   * @param productCode
+   * @param quantity
+   */
+  abstract addToEntryGroup(
+    entryGroupNumber: number, 
+    productCode: string, 
+    quantity?: number): void;
 }

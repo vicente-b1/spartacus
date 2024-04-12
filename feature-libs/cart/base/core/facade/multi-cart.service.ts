@@ -427,13 +427,44 @@ export class MultiCartService implements MultiCartFacade {
    * @param cartId
    * @param entryGroupNumber
    */
-  removeEntryGroup(userId: string, cartId: string, entryGroupNumber: number): void {
+  removeEntryGroup(
+    userId: string, 
+    cartId: string, 
+    entryGroupNumber: number
+  ): void {
     this.store.dispatch(
       new CartActions.CartRemoveEntryGroup({
         userId,
         cartId,
-        entryGroupNumber: `${entryGroupNumber}`,
+        entryGroupNumber,
       })
     );
-  }  
+  }
+  
+  /**
+   * Add product to cart entry group
+   *
+   * @param userId
+   * @param cartId
+   * @param entryGroupNumber
+   * @param productCode
+   * @param quantity
+   */
+  addToEntryGroup(
+    userId: string,
+    cartId: string,
+    entryGroupNumber: number,
+    productCode: string,
+    quantity: number = 1,
+  ): void {
+    this.store.dispatch(
+      new CartActions.CartAddToEntryGroup({
+        userId,
+        cartId,
+        entryGroupNumber,
+        productCode,
+        quantity,
+      })
+    );
+  }
 }

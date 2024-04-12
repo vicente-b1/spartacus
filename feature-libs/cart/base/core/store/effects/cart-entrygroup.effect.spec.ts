@@ -2,6 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { provideMockActions } from '@ngrx/effects/testing';
 import { Action } from '@ngrx/store';
+import { CartModification } from '@spartacus/cart/base/root';
 import { OccConfig } from '@spartacus/core';
 import { cold, hot } from 'jasmine-marbles';
 import { Observable, of } from 'rxjs';
@@ -22,12 +23,21 @@ const MockOccModuleConfig: OccConfig = {
 describe('Cart effect', () => {
   let entryEffects: fromEffects.CartEntryGroupEffects;
   let actions$: Observable<Action>;
+  let mockCartModification: Required<CartModification>;
 
   const userId = 'testUserId';
   const cartId = 'testCartId';
-  const entryGroupNumber = 'testEntryGroupNumber';
+  const entryGroupNumber = 1;
 
   beforeEach(() => {
+    mockCartModification = {
+      deliveryModeChanged: true,
+      entry: {},
+      quantity: 1,
+      quantityAdded: 1,
+      statusCode: 'statusCode',
+      statusMessage: 'statusMessage',
+    };
 
     const mockCartEntryGroupConnector: Partial<CartEntryGroupConnector> = {
       remove: createSpy().and.returnValue(of({}))
@@ -55,6 +65,30 @@ describe('Cart effect', () => {
       const expected = cold('-b', { b: completion });
 
       expect(entryEffects.removeEntryGroup$).toBeObservable(expected);
+    });
+  });
+
+  describe('addToEntryGroup$', () => {
+    it('should add to an entry group', () => {
+      const action = new CartActions.CartAddToEntryGroup({
+        userId,
+        cartId,
+        entryGroupNumber,
+        productCode: 'testProductCode',
+        quantity: 1,
+      });
+      const completion = new CartActions.CartAddToEntryGroupSuccess({
+        userId,
+        cartId,
+        entryGroupNumber,
+        productCode: 'testProductCode',
+        ...mockCartModification,
+      });
+
+      actions$ = hot('-a', { a: action });
+      const expected = cold('-b', { b: completion });
+
+      expect(entryEffects.addToEntryGroup$).toBeObservable(expected);
     });
   });
 });

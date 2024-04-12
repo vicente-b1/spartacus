@@ -516,14 +516,30 @@ describe('MultiCartService', () => {
     });
   });
 
+  describe('addToEntryGroup', () => {
+    it('should dispatch addToEntryGroup action', () => {
+      service.addToEntryGroup('userId', 'cartId', 1, 'productCode', 2);
+
+      expect(store.dispatch).toHaveBeenCalledWith(
+        new CartActions.CartAddToEntryGroup({
+          cartId: 'cartId',
+          userId: 'userId',
+          entryGroupNumber: 1,
+          productCode: 'productCode',
+          quantity: 2
+        })
+      );
+    });
+  });
+
   describe('removeEntryGroup', () => {
     it('should dispatch RemoveEntryGroup action', () => {
-      service.removeEntryGroup('userId', 'cartId', 0);
+      service.removeEntryGroup('userId', 'cartId', 1);
       expect(store.dispatch).toHaveBeenCalledWith(
         new CartActions.CartRemoveEntryGroup({
           cartId: 'cartId',
           userId: 'userId',
-          entryGroupNumber: '0',
+          entryGroupNumber: 1,
         })
       );
     });

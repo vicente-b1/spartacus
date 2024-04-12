@@ -17,8 +17,18 @@ export class CartEntryGroupConnector {
   public remove(
     userId: string,
     cartId: string,
-    entryGroupNumber: string
+    entryGroupNumber: number
   ): Observable<any> {
     return this.adapter.remove(userId, cartId, entryGroupNumber);
+  }
+
+  public addTo(
+    userId: string,
+    cartId: string,
+    entryGroupNumber: number,
+    productCode: string,
+    quantity: number = 1
+  ): Observable<any> {
+    return this.adapter.addTo(userId, cartId, entryGroupNumber, productCode, quantity);
   }
 }

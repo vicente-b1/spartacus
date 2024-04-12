@@ -56,6 +56,12 @@ export interface CartOccEndpoints {
    */
   removeEntryGroup?: string | OccEndpoint;
   /**
+   * Add a product to cart entry group
+   *
+   * @member {string} [addToEntryGroup]
+   */
+  addToEntryGroup?: string | OccEndpoint;
+  /**
    * Assign email to cart
    *
    * @member {string} [addEmail]

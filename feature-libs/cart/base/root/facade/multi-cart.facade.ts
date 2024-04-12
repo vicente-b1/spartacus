@@ -273,6 +273,26 @@ export abstract class MultiCartFacade {
    * @param cartId
    * @param entryGroupNumber
    */
-  abstract removeEntryGroup(userId: string, cartId: string, entryGroupNumber: number): void;
+  abstract removeEntryGroup(
+    userId: string, 
+    cartId: string, 
+    entryGroupNumber: number
+  ): void;
   
+    /**
+   * Add product to cart entry group
+   *
+   * @param userId
+   * @param cartId
+   * @param entryGroupNumber
+   * @param productCode
+   * @param quantity
+   */
+  abstract addToEntryGroup(
+    userId: string,
+    cartId: string,
+    entryGroupNumber: number,
+    productCode: string,
+    quantity?: number,
+  ): void;
 }
