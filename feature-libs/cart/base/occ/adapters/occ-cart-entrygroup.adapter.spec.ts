@@ -2,6 +2,11 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing';
+import {
+  Cart,
+  CartModification,
+  CART_MODIFICATION_NORMALIZER,
+} from '@spartacus/cart/base/root';
 import { TestBed } from '@angular/core/testing';
 import {
   BaseOccUrlProperties,
@@ -13,7 +18,15 @@ import { OccCartEntryGroupAdapter } from './occ-cart-entrygroup.adapter';
 
 const userId = '123';
 const cartId = '456';
-const entryGroupNumber = '147852';
+const entryGroupNumber = 1;
+
+const cartData: Cart = {
+  store: 'electronics',
+  guid: '1212121',
+};
+const cartModified: CartModification = {
+  deliveryModeChanged: true,
+};
 
 class MockOccEndpointsService {
   buildUrl(
@@ -76,8 +89,44 @@ describe('OccCartEntryGroupAdapter', () => {
       );
       expect(mockReq.cancelled).toBeFalsy();
       expect(mockReq.request.responseType).toEqual('json');
-      mockReq.flush(null);
-      expect(result).toBeNull;
+      mockReq.flush(cartData);
+      expect(result).toEqual(cartData);
+    });
+  });
+
+  fdescribe('add product to cart entry group', () => {
+    it('should add product to cart for given user id, cart id, entry group number, product code and product quantity', () => {
+      let result;
+      occCartEntryGroupAdapter
+        .addTo(userId, cartId, 1, '147852', 5)
+        .subscribe((res) => (result = res));
+
+      const mockReq = httpMock.expectOne({ method: 'POST', url: 'addToEntryGroup' });
+
+      expect(mockReq.request.headers.get('Content-Type')).toEqual(
+        'application/json'
+      );
+
+      expect(mockReq.request.body).toEqual({
+        product: { code: '147852' },
+        quantity: 5,
+      });
+
+      expect(occEndpointsService.buildUrl).toHaveBeenCalledWith('addToEntryGroup', {
+        urlParams: {
+          userId,
+          cartId,
+          entryGroupNumber,
+        },
+      });
+
+      expect(mockReq.cancelled).toBeFalsy();
+      expect(mockReq.request.responseType).toEqual('json');
+      mockReq.flush(cartModified);
+      expect(result).toEqual(cartModified);
+      expect(converterService.pipeable).toHaveBeenCalledWith(
+        CART_MODIFICATION_NORMALIZER
+      );
     });
   });
 });

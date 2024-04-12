@@ -4,7 +4,7 @@ import { CartActions } from './index';
 
 const userId = 'xxx@xxx.xxx';
 const cartId = 'testCartId';
-const entryGroupNumber = 'testEntryGroupNumber';
+const entryGroupNumber = 1;
 
 describe('Cart-entrygroup Actions', () => {
   beforeEach(() => {});

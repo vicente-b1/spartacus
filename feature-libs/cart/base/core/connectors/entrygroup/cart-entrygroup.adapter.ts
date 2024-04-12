@@ -5,6 +5,7 @@
  */
 
 import { Observable } from 'rxjs';
+import { CartModification } from '@spartacus/cart/base/root';
 
 export abstract class CartEntryGroupAdapter {
   /**
@@ -17,6 +18,23 @@ export abstract class CartEntryGroupAdapter {
   abstract remove(
     userId: string,
     cartId: string,
-    entryGroupNumber: string
+    entryGroupNumber: number
   ): Observable<any>;
+
+  /**
+   * Abstract method used to add product to cart entry group
+   *
+   * @param userId
+   * @param cartId
+   * @param entryGroupNumber
+   * @param productCode
+   * @param quantity
+   */
+  abstract addTo(
+    userId: string,
+    cartId: string,
+    entryGroupNumber: number,
+    productCode: string,
+    quantity?: number
+  ): Observable<CartModification>;
 }

@@ -6,6 +6,7 @@
 
 import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { CartModification } from '@spartacus/cart/base/root';
 import {
   LoggerService,
   SiteContextActions,
@@ -60,6 +61,49 @@ export class CartEntryGroupEffects {
             )
           )
       ),
+      withdrawOn(this.contextChange$)
+    )
+  );
+
+  addToEntryGroup$: Observable<
+    | CartActions.CartAddToEntryGroupSuccess
+    | CartActions.CartAddToEntryGroupFail
+    | CartActions.LoadCart
+  > = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CartActions.CART_ADD_TO_ENTRYGROUP),
+      map((action: CartActions.CartAddToEntryGroup) => action.payload),
+      concatMap((payload) => {
+        return this.cartEntryGroupConnector
+          .addTo(
+            payload.userId,
+            payload.cartId,
+            payload.entryGroupNumber,
+            payload.productCode,
+            payload.quantity
+          )
+          .pipe(
+            map(
+              (cartModification: CartModification) =>
+                new CartActions.CartAddToEntryGroupSuccess({
+                  ...payload,
+                  ...(cartModification as Required<CartModification>),
+                })
+            ),
+            catchError((error) =>
+              from([
+                new CartActions.CartAddToEntryGroupFail({
+                  ...payload,
+                  error: normalizeHttpError(error, this.logger),
+                }),
+                new CartActions.LoadCart({
+                  cartId: payload.cartId,
+                  userId: payload.userId,
+                }),
+              ])
+            )
+          );
+      }),
       withdrawOn(this.contextChange$)
     )
   );
