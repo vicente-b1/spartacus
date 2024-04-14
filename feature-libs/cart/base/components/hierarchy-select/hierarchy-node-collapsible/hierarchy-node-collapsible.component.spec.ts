@@ -6,7 +6,6 @@ import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { Subject } from 'rxjs';
 
-import { SapIconPipe } from 'app/shared/pipes/sap-icon.pipe';
 import { CollapsibleNode } from '../collapsible-node.model';
 import { NodeEventType } from '../events';
 import { HierarchyNodeCollapsibleComponent } from './hierarchy-node-collapsible.component';
@@ -25,7 +24,7 @@ describe('HierarchyNodeCollapsibleComponent', () => {
 				},
 			})
 				.configureTestingModule({
-					declarations: [HierarchyNodeCollapsibleComponent, SapIconPipe],
+					declarations: [HierarchyNodeCollapsibleComponent],
 					providers: [],
 					schemas: [NO_ERRORS_SCHEMA],
 				})

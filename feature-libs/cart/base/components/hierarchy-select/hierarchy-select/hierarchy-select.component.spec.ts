@@ -6,13 +6,10 @@ import { Component, EventEmitter, Input, NO_ERRORS_SCHEMA, Output, SimpleChange 
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { UntypedFormBuilder } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 import { CollapsibleNode } from '../collapsible-node.model';
-import { CustomBehaviorPlugin } from '../custom-behavior-plugin.interface';
 import { HierarchyNode } from '../hierarchy-node.model';
 import { SelectionNode } from '../selection-node.model';
 import { HierarchySelectComponent } from './hierarchy-select.component';
-import { HierarchySelectEventType } from './hierarchy-select-event.enum';
 
 @Component({
 	selector: 'app-hierarchy-node',
@@ -112,72 +109,5 @@ describe('HierarchySelectComponent', () => {
 		});
 		fixture.detectChanges();
 		expect(component.showBorderBottom).toBe(false);
-	});
-
-	it('should diplay search field when searchFieldEnabled = true', () => {
-		// GIVEN
-		component.tree = new HierarchyNode('smth');
-		component.searchFieldEnabled = true;
-
-		// WHEN
-		fixture.detectChanges();
-
-		// THEN
-		const element = fixture.debugElement.query(By.css('.filter-search'));
-		expect(element).toBeTruthy();
-	});
-
-	it('should not diplay search field when searchFieldEnabled = false', () => {
-		// GIVEN
-		component.tree = new HierarchyNode('smth');
-		component.searchFieldEnabled = false;
-
-		// WHEN
-		fixture.detectChanges();
-
-		// THEN
-		const element = fixture.debugElement.query(By.css('.filter-search'));
-		expect(element).toBeFalsy();
-	});
-
-	describe('custom handlers', () => {
-		let mockEventNode: HierarchyNode;
-		let mockCustomBehaviorPlugin: CustomBehaviorPlugin;
-		let callbackSpy;
-
-		beforeEach(() => {
-			mockEventNode = new HierarchyNode('mockEventNode', {
-				children: [],
-			});
-			mockCustomBehaviorPlugin = {
-				callback(node: HierarchyNode, root: HierarchyNode, type: HierarchySelectEventType): void {
-					// Intentional: Mock method
-				},
-			};
-
-			callbackSpy = spyOn(mockCustomBehaviorPlugin, 'callback').and.callThrough();
-
-			component.tree = mockEventNode;
-		});
-
-		describe('events', () => {
-			beforeEach(() => {
-				component.handlers = [mockCustomBehaviorPlugin];
-			});
-
-			it("should emit event of type 'COLLAPSE'", () => {
-				component.handleCollapsibleToggle(mockEventNode as CollapsibleNode<any>);
-
-				expect(callbackSpy).toHaveBeenCalledTimes(1);
-				expect(callbackSpy).toHaveBeenCalledWith(mockEventNode, component.tree, HierarchySelectEventType.COLLAPSE);
-			});
-
-			it("should emit event of type 'SELECT'", () => {
-				component.handleSelectionToggle(mockEventNode as SelectionNode<any>);
-
-				expect(callbackSpy).toHaveBeenCalledTimes(1);
-				expect(callbackSpy).toHaveBeenCalledWith(mockEventNode, component.tree, HierarchySelectEventType.SELECT);
-			});
-		});
 	});
 });

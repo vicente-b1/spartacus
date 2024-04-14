@@ -94,7 +94,7 @@ describe('OccCartEntryGroupAdapter', () => {
     });
   });
 
-  fdescribe('add product to cart entry group', () => {
+  describe('add product to cart entry group', () => {
     it('should add product to cart for given user id, cart id, entry group number, product code and product quantity', () => {
       let result;
       occCartEntryGroupAdapter

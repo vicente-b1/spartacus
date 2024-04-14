@@ -40,6 +40,7 @@ describe('Cart effect', () => {
     };
 
     const mockCartEntryGroupConnector: Partial<CartEntryGroupConnector> = {
+      addTo: createSpy().and.returnValue(of(mockCartModification)),
       remove: createSpy().and.returnValue(of({}))
     };
 
