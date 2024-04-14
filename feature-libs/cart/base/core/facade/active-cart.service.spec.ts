@@ -37,6 +37,8 @@ export class MultiCartFacadeStub {
     return EMPTY;
   }
   updateEntry() {}
+  addToEntryGroup() {}
+  removeEntryGroup() {}
   removeEntry() {}
   getEntries() {
     return of([]);

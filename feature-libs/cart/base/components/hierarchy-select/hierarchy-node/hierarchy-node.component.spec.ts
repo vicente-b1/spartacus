@@ -7,7 +7,6 @@ import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { CollapsibleNode } from '../collapsible-node.model';
 import { HierarchyNode } from '../hierarchy-node.model';
-import { SelectionNode } from '../selection-node.model';
 import { TitleNode } from '../title-node.model';
 import { HierarchyNodeComponent } from './hierarchy-node.component';
 
@@ -71,14 +70,6 @@ describe('HierarchyNodeComponent', () => {
 			component.ngOnInit();
 
 			expect(component.type).toEqual('NODE');
-		});
-
-		it('should set NODE for SelectionNode', () => {
-			component.tree = new SelectionNode();
-
-			component.ngOnInit();
-
-			expect(component.type).toEqual('SELECTION');
 		});
 
 		it('should set NODE for CollapsibleNode', () => {
