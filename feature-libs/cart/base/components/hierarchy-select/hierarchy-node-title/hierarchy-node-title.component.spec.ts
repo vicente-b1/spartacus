@@ -9,35 +9,37 @@ import { HierarchyNodeTitleComponent } from './hierarchy-node-title.component';
 
 @Pipe({ name: 'cxTranslate' })
 class MockTranslatePipe implements PipeTransform {
-	transform(): any {}
+  transform(): any {}
 }
 
 describe('HierarchyNodeTitleComponent', () => {
-	let component: HierarchyNodeTitleComponent<void>;
-	let fixture: ComponentFixture<HierarchyNodeTitleComponent<void>>;
+  let component: HierarchyNodeTitleComponent<void>;
+  let fixture: ComponentFixture<HierarchyNodeTitleComponent<void>>;
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.overrideComponent(HierarchyNodeTitleComponent, {
-				set: {
-					providers: [],
-				},
-			})
-				.configureTestingModule({
-					declarations: [HierarchyNodeTitleComponent, MockTranslatePipe],
-					providers: [],
-					schemas: [NO_ERRORS_SCHEMA],
-				})
-				.compileComponents();
-		})
-	);
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.overrideComponent(HierarchyNodeTitleComponent, {
+        set: {
+          providers: [],
+        },
+      })
+        .configureTestingModule({
+          declarations: [HierarchyNodeTitleComponent, MockTranslatePipe],
+          providers: [],
+          schemas: [NO_ERRORS_SCHEMA],
+        })
+        .compileComponents();
+    })
+  );
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent<HierarchyNodeTitleComponent<void>>(HierarchyNodeTitleComponent);
-		component = fixture.componentInstance;
-	});
+  beforeEach(() => {
+    fixture = TestBed.createComponent<HierarchyNodeTitleComponent<void>>(
+      HierarchyNodeTitleComponent
+    );
+    component = fixture.componentInstance;
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

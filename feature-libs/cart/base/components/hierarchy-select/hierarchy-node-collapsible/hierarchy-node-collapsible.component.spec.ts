@@ -12,113 +12,136 @@ import { HierarchyNodeCollapsibleComponent } from './hierarchy-node-collapsible.
 
 @Pipe({ name: 'cxTranslate' })
 class MockTranslatePipe implements PipeTransform {
-	transform(): any {}
+  transform(): any {}
 }
-    
+
 describe('HierarchyNodeCollapsibleComponent', () => {
-	let component: HierarchyNodeCollapsibleComponent<void>;
-	let fixture: ComponentFixture<HierarchyNodeCollapsibleComponent<void>>;
+  let component: HierarchyNodeCollapsibleComponent<void>;
+  let fixture: ComponentFixture<HierarchyNodeCollapsibleComponent<void>>;
 
-	const mockCollapsibleNode = new CollapsibleNode<void>('L1 CollapsibleNode');
+  const mockCollapsibleNode = new CollapsibleNode<void>('L1 CollapsibleNode');
 
-	beforeEach(
-		waitForAsync(() => {
-			TestBed.overrideComponent(HierarchyNodeCollapsibleComponent, {
-				set: {
-					providers: [],
-				},
-			})
-				.configureTestingModule({
-					declarations: [HierarchyNodeCollapsibleComponent, MockTranslatePipe],
-					providers: [],
-					schemas: [NO_ERRORS_SCHEMA],
-				})
-				.compileComponents();
-		})
-	);
+  beforeEach(
+    waitForAsync(() => {
+      TestBed.overrideComponent(HierarchyNodeCollapsibleComponent, {
+        set: {
+          providers: [],
+        },
+      })
+        .configureTestingModule({
+          declarations: [HierarchyNodeCollapsibleComponent, MockTranslatePipe],
+          providers: [],
+          schemas: [NO_ERRORS_SCHEMA],
+        })
+        .compileComponents();
+    })
+  );
 
-	beforeEach(() => {
-		fixture = TestBed.createComponent<HierarchyNodeCollapsibleComponent<void>>(HierarchyNodeCollapsibleComponent);
-		component = fixture.componentInstance;
+  beforeEach(() => {
+    fixture = TestBed.createComponent<HierarchyNodeCollapsibleComponent<void>>(
+      HierarchyNodeCollapsibleComponent
+    );
+    component = fixture.componentInstance;
 
-		component.tree = mockCollapsibleNode;
-	});
+    component.tree = mockCollapsibleNode;
+  });
 
-	it('should create', () => {
-		expect(component).toBeTruthy();
-	});
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-	it('should toggle state of tree', () => {
-		const oldValue = mockCollapsibleNode.open;
+  it('should toggle state of tree', () => {
+    const oldValue = mockCollapsibleNode.open;
 
-		component.toggle();
+    component.toggle();
 
-		expect(mockCollapsibleNode.open).toBe(!oldValue);
-	});
+    expect(mockCollapsibleNode.open).toBe(!oldValue);
+  });
 
-	it('should emit tree on toggle', () => {
-		const expected = component.tree;
-		let actual: CollapsibleNode;
-		component.collapsibleToggle.subscribe((node: CollapsibleNode) => {
-			actual = node;
-		});
+  it('should emit tree on toggle', () => {
+    const expected = component.tree;
+    let actual: CollapsibleNode;
+    component.collapsibleToggle.subscribe((node: CollapsibleNode) => {
+      actual = node;
+    });
 
-		component.toggle();
+    component.toggle();
 
-		expect(actual).toBe(expected);
-	});
+    expect(actual).toBe(expected);
+  });
 
-	it('should reflect open state of tree', () => {
-		expect(component.open).toBe(mockCollapsibleNode.open);
+  it('should reflect open state of tree', () => {
+    expect(component.open).toBe(mockCollapsibleNode.open);
 
-		component.toggle();
+    component.toggle();
 
-		expect(component.open).toBe(mockCollapsibleNode.open);
-	});
+    expect(component.open).toBe(mockCollapsibleNode.open);
+  });
 
-	it('should lazy load children', () => {
-		const lazyLoad = new Subject<Array<CollapsibleNode<string>>>();
+  it('should lazy load children', () => {
+    const lazyLoad = new Subject<Array<CollapsibleNode<string>>>();
 
-		mockCollapsibleNode.lazyLoadFactory = jasmine.createSpy('lazyLoadFactory').and.callFake(node => {
-			expect(node).toBe(mockCollapsibleNode);
-			return lazyLoad;
-		});
+    mockCollapsibleNode.lazyLoadFactory = jasmine
+      .createSpy('lazyLoadFactory')
+      .and.callFake((node) => {
+        expect(node).toBe(mockCollapsibleNode);
+        return lazyLoad;
+      });
 
-		fixture.detectChanges();
+    fixture.detectChanges();
 
-		let event;
-		const subscription = component.event.subscribe(e => (event = e));
+    let event;
+    const subscription = component.event.subscribe((e) => (event = e));
 
-		mockCollapsibleNode.disabled = false;
-		mockCollapsibleNode.open = false;
+    mockCollapsibleNode.disabled = false;
+    mockCollapsibleNode.open = false;
 
-		component.toggle();
+    component.toggle();
 
-		expect(mockCollapsibleNode.lazyLoadFactory).toHaveBeenCalledWith(mockCollapsibleNode);
+    expect(mockCollapsibleNode.lazyLoadFactory).toHaveBeenCalledWith(
+      mockCollapsibleNode
+    );
 
-		lazyLoad.next([new CollapsibleNode(null, { value: 'foo' }), new CollapsibleNode(null, { value: 'bar' }), new CollapsibleNode(null, { value: 'baz' })]);
+    lazyLoad.next([
+      new CollapsibleNode(null, { value: 'foo' }),
+      new CollapsibleNode(null, { value: 'bar' }),
+      new CollapsibleNode(null, { value: 'baz' }),
+    ]);
 
-		expect(mockCollapsibleNode.children).toEqual([
-			new CollapsibleNode(null, { value: 'foo' }),
-			new CollapsibleNode(null, { value: 'bar' }),
-			new CollapsibleNode(null, { value: 'baz' }),
-		]);
-		expect(event).toEqual({
-			node: mockCollapsibleNode,
-			children: [new CollapsibleNode(null, { value: 'foo' }), new CollapsibleNode(null, { value: 'bar' }), new CollapsibleNode(null, { value: 'baz' })],
-			type: NodeEventType.LOAD_CHILDREN,
-		});
+    expect(mockCollapsibleNode.children).toEqual([
+      new CollapsibleNode(null, { value: 'foo' }),
+      new CollapsibleNode(null, { value: 'bar' }),
+      new CollapsibleNode(null, { value: 'baz' }),
+    ]);
+    expect(event).toEqual({
+      node: mockCollapsibleNode,
+      children: [
+        new CollapsibleNode(null, { value: 'foo' }),
+        new CollapsibleNode(null, { value: 'bar' }),
+        new CollapsibleNode(null, { value: 'baz' }),
+      ],
+      type: NodeEventType.LOAD_CHILDREN,
+    });
 
-		lazyLoad.next([new CollapsibleNode(null, { value: 'refreshed foo' }), new CollapsibleNode(null, { value: 'refreshed bar' })]);
+    lazyLoad.next([
+      new CollapsibleNode(null, { value: 'refreshed foo' }),
+      new CollapsibleNode(null, { value: 'refreshed bar' }),
+    ]);
 
-		expect(mockCollapsibleNode.children).toEqual([new CollapsibleNode(null, { value: 'refreshed foo' }), new CollapsibleNode(null, { value: 'refreshed bar' })]);
-		expect(event).toEqual({
-			node: mockCollapsibleNode,
-			children: [new CollapsibleNode(null, { value: 'refreshed foo' }), new CollapsibleNode(null, { value: 'refreshed bar' })],
-			type: NodeEventType.LOAD_CHILDREN,
-		});
+    expect(mockCollapsibleNode.children).toEqual([
+      new CollapsibleNode(null, { value: 'refreshed foo' }),
+      new CollapsibleNode(null, { value: 'refreshed bar' }),
+    ]);
+    expect(event).toEqual({
+      node: mockCollapsibleNode,
+      children: [
+        new CollapsibleNode(null, { value: 'refreshed foo' }),
+        new CollapsibleNode(null, { value: 'refreshed bar' }),
+      ],
+      type: NodeEventType.LOAD_CHILDREN,
+    });
 
-		lazyLoad.complete();
-		subscription.unsubscribe();
-	});
+    lazyLoad.complete();
+    subscription.unsubscribe();
+  });
 });
