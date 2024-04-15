@@ -3,9 +3,14 @@
  */
 
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 
 import { HierarchyNodeTitleComponent } from './hierarchy-node-title.component';
+
+@Pipe({ name: 'cxTranslate' })
+class MockTranslatePipe implements PipeTransform {
+	transform(): any {}
+}
 
 describe('HierarchyNodeTitleComponent', () => {
 	let component: HierarchyNodeTitleComponent<void>;
@@ -19,7 +24,7 @@ describe('HierarchyNodeTitleComponent', () => {
 				},
 			})
 				.configureTestingModule({
-					declarations: [HierarchyNodeTitleComponent],
+					declarations: [HierarchyNodeTitleComponent, MockTranslatePipe],
 					providers: [],
 					schemas: [NO_ERRORS_SCHEMA],
 				})

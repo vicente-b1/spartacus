@@ -3,13 +3,18 @@
  */
 
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 import { Subject } from 'rxjs';
 
 import { CollapsibleNode } from '../collapsible-node.model';
 import { NodeEventType } from '../events';
 import { HierarchyNodeCollapsibleComponent } from './hierarchy-node-collapsible.component';
 
+@Pipe({ name: 'cxTranslate' })
+class MockTranslatePipe implements PipeTransform {
+	transform(): any {}
+}
+    
 describe('HierarchyNodeCollapsibleComponent', () => {
 	let component: HierarchyNodeCollapsibleComponent<void>;
 	let fixture: ComponentFixture<HierarchyNodeCollapsibleComponent<void>>;
@@ -24,7 +29,7 @@ describe('HierarchyNodeCollapsibleComponent', () => {
 				},
 			})
 				.configureTestingModule({
-					declarations: [HierarchyNodeCollapsibleComponent],
+					declarations: [HierarchyNodeCollapsibleComponent, MockTranslatePipe],
 					providers: [],
 					schemas: [NO_ERRORS_SCHEMA],
 				})
