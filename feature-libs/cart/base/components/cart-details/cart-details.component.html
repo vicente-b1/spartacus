@@ -1,5 +1,5 @@
 <ng-container *ngIf="cart$ | async as cart">
-  <ng-container *ngIf="{entries: entries$ | async, entryGroups: entryGroups$ | async, standaloneEntries: standaloneEntries$ | async} as data">
+  <ng-container *ngIf="{entries: entries$ | async, entryGroups: entryGroups$ | async, standaloneEntries: standaloneEntries$ | async, bundle: entries$ | async} as data">
     <div *ngIf="cart.totalItems > 0" class="cart-details-wrapper">
       <cx-cart-validation-warnings></cx-cart-validation-warnings>
 
@@ -23,9 +23,9 @@
           isSaveForLater: false,
           optionalBtn: saveForLaterBtn
         }"
-        [class.emptyList]="!data.standaloneEntries"
+        [ngClass]="!data.standaloneEntries ? 'emptyList' : 'noneEmptyList'"
       ></cx-cart-item-list>
-
+      <!-- [class.emptyList]="!data.standaloneEntries" -->
       <ng-container *ngFor="let bundle of bundles$ | async">
           <cx-hierarchy-select 
             [paddingPrefix]="12" 
