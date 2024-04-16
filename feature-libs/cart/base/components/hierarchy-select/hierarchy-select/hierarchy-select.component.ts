@@ -8,12 +8,9 @@ import { buffer, take } from 'rxjs/operators';
 
 import { UntypedFormBuilder, UntypedFormControl } from '@angular/forms';
 import { CollapsibleNode } from '../index';
-import { CustomBehaviorPlugin } from '../index';
 import { NodeEvent, NodeEventType, Select } from '../events';
 import { HierarchyNode } from '../hierarchy-node.model';
 import { SelectionNode } from '../selection-node.model';
-import { HierarchySelectEventType } from './hierarchy-select-event.enum';
-
 
 /**
  * Selector component that displays a tree-based model.
@@ -53,11 +50,6 @@ export class HierarchySelectComponent<T> implements OnInit, OnChanges {
 	 * Adjustable starting padding for the rows.
 	 */
 	@Input() paddingPrefix = 0;
-
-	/**
-	 * Array of plugins for extending the behavior of the component when certain events occur.
-	 */
-	@Input() handlers?: Array<CustomBehaviorPlugin>;
 
 	@Input() disabled: boolean;
 
@@ -109,13 +101,10 @@ export class HierarchySelectComponent<T> implements OnInit, OnChanges {
 	 */
 	handleCollapsibleToggle(node: CollapsibleNode): void {
 		this.collapse.emit(node);
-
-		this.handleEvent(node, this.tree, HierarchySelectEventType.COLLAPSE);
 	}
 
 	ngOnInit(): void {
 		this.calculateShowBottom();
-		this.handleEvent(null, this.tree, HierarchySelectEventType.LOAD);
 
 		if (this.maxHeight !== undefined) {
 			this.hierarchyStyle = {
@@ -141,13 +130,6 @@ export class HierarchySelectComponent<T> implements OnInit, OnChanges {
 
 	private calculateShowBottom(): void {
 		this.showBorderBottom = !this.tree || this.tree?.children.length === 0;
-	}
-
-	/**
-	 * Processes events to run added custom behavior plugins
-	 */
-	private handleEvent(node: HierarchyNode, root: HierarchyNode, type: HierarchySelectEventType): void {
-		this.handlers?.forEach(handler => handler.callback(node, root, type));
 	}
 
 	private createSelectEvent(event: Select<T>): void {
