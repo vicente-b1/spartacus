@@ -2,13 +2,10 @@
  * 2021 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
-import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-
-import { SubscriptionTracker } from '../utils';
+import { Component, HostBinding } from '@angular/core';
 
 import { CollapsibleNode } from '../collapsible-node.model';
 import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.component';
-// import { EntryGroup, OrderEntry } from 'feature-libs/cart/base/root/models';
 
 /**
  * Hierarchy Selection node variant that is collapsible
@@ -69,7 +66,6 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
 })
 export class HierarchyNodeCollapsibleComponent<T>
   extends HierarchyNodeComponent<T>
-  implements OnDestroy, OnInit
 {
   childPadding = 20;
 
@@ -77,12 +73,6 @@ export class HierarchyNodeCollapsibleComponent<T>
 
   @HostBinding('class.open') get open(): boolean {
     return this.tree.open;
-  }
-
-  private subTracker = new SubscriptionTracker();
-
-  ngOnDestroy(): void {
-    this.subTracker.unsubscribe();
   }
 
   toggle(): void {

@@ -4,17 +4,14 @@
 
 import {
   Component,
-  EventEmitter,
   HostBinding,
   Input,
   OnChanges,
   OnInit,
-  Output,
   SimpleChanges,
 } from '@angular/core';
 
 import { CollapsibleNode } from '../index';
-import { NodeEvent } from '../events';
 import { HierarchyNode } from '../hierarchy-node.model';
 import { TitleNode } from '../title-node.model';
 @Component({
@@ -44,11 +41,6 @@ export class HierarchyNodeComponent<T> implements OnInit, OnChanges {
   @Input() paddingPrefix = 0;
 
   aliasPaddingPrefix = 0;
-
-  /**
-   * You know, we could maybe save space by having this be a single instance and Injectable.
-   */
-  @Output() event = new EventEmitter<NodeEvent<T>>();
 
   /** How much further (in px) this element should be indented under the parent. */
   paddingLeft = 10;
