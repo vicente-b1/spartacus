@@ -6,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { IconModule } from '@spartacus/storefront';
-import { RenderContentDirectiveModule } from './render-content/render-content.directive.module';
 
 import { HierarchyNodeCollapsibleComponent } from './hierarchy-node-collapsible/hierarchy-node-collapsible.component';
 import { HierarchyNodeComponent } from './hierarchy-node/hierarchy-node.component';
@@ -16,20 +15,20 @@ import { CartSharedModule } from '../cart-shared';
 import { I18nModule } from '@spartacus/core';
 
 @NgModule({
-	imports: [
-		ReactiveFormsModule, 
-		CommonModule, 
-		FormsModule, 
-		RenderContentDirectiveModule,
-		IconModule, 
-		CartSharedModule, 
-		I18nModule ],
-	exports: [HierarchySelectComponent, HierarchyNodeComponent],
-	declarations: [
-		HierarchyNodeCollapsibleComponent,
-		HierarchyNodeTitleComponent,
-		HierarchyNodeComponent,
-		HierarchySelectComponent,
-	],
+  imports: [
+    ReactiveFormsModule,
+    CommonModule,
+    FormsModule,
+    IconModule,
+    CartSharedModule,
+    I18nModule,
+  ],
+  exports: [HierarchySelectComponent, HierarchyNodeComponent],
+  declarations: [
+    HierarchyNodeCollapsibleComponent,
+    HierarchyNodeTitleComponent,
+    HierarchyNodeComponent,
+    HierarchySelectComponent,
+  ],
 })
 export class HierarchySelectModule {}
