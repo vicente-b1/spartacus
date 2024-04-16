@@ -12,5 +12,3 @@ export * from './collapsible-selection-node.model';
 export { TitleNode } from './title-node.model';
 export { CollapsibleSelectAllNode } from './collapsible-select-all-node.model';
 export { CustomBehaviorPlugin } from './custom-behavior-plugin.interface';
-
-export * from './hierarchy-select.utils';
