@@ -25,7 +25,6 @@
         }"
         [ngClass]="!data.standaloneEntries ? 'emptyList' : 'noneEmptyList'"
       ></cx-cart-item-list>
-      <!-- [class.emptyList]="!data.standaloneEntries" -->
       <ng-container *ngFor="let bundle of bundles$ | async">
           <cx-hierarchy-select 
             [paddingPrefix]="12" 
