@@ -21,7 +21,6 @@ import { filter, map, tap } from 'rxjs/operators';
 import {
   CollapsibleNode,
   HierarchyNode,
-  SelectionNode,
   TitleNode,
 } from '../hierarchy-select';
 
@@ -90,11 +89,6 @@ export class CartDetailsComponent implements OnInit {
           : cartLoaded
       )
     );
-  }
-
-  onTagsChecked(checked: Array<SelectionNode<any>>): void {
-    const _tags = checked.map((tag) => tag.value);
-    console.log('onTagsChecked', _tags);
   }
 
   prepareBundle(

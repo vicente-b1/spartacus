@@ -3,13 +3,10 @@
  */
 
 import { Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
 
 import { SubscriptionTracker } from '../utils';
 
-import { CollapsibleNode, LazyLoadFactory } from '../collapsible-node.model';
-import { LoadChildren, NodeEventType } from '../events';
-import { HierarchyNode } from '../hierarchy-node.model';
+import { CollapsibleNode } from '../collapsible-node.model';
 import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.component';
 // import { EntryGroup, OrderEntry } from 'feature-libs/cart/base/root/models';
 
@@ -37,10 +34,6 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
       *ngFor="let child of tree.children; let i = index"
       [tree]="child"
       [paddingPrefix]="childPaddingLeft"
-      [requireRequired]="requireRequired"
-      (collapsibleToggle)="collapsibleToggle.emit($event)"
-      (selectionToggle)="selectionToggle.emit($event)"
-      (event)="event.emit($event)"
     >
     </cx-hierarchy-node>
     <ng-container *ngIf="tree.children.length === 0">
@@ -86,54 +79,15 @@ export class HierarchyNodeCollapsibleComponent<T>
     return this.tree.open;
   }
 
-  private lazyLoadFactory: LazyLoadFactory<T>;
-
-  private lazyLoad: Observable<Array<HierarchyNode<T>>>;
-
   private subTracker = new SubscriptionTracker();
-
-  // orderEnrties: OrderEntry[]= [];
-
-  // orderEntryGroups: OrderEntryGroup;
 
   ngOnDestroy(): void {
     this.subTracker.unsubscribe();
   }
 
-  ngOnInit(): void {
-    this.lazyLoadFactory = this.tree.lazyLoadFactory;
-    // this.entryGroups = this.tree.value as EntryGroup;
-    // this.tree.value.entries?.forEach((entry: OrderEntry) => {
-    // 	this.orderEnrties.push(entry);
-    // });
-  }
-
   toggle(): void {
     if (!this.tree.disabled) {
       this.tree.open = !this.tree.open;
-
-      if (this.tree.open) {
-        if (
-          this.lazyLoadFactory &&
-          !this.lazyLoad &&
-          !this.tree.children?.length
-        ) {
-          this.lazyLoad = this.lazyLoadFactory(this.tree);
-
-          this.subTracker.sub = this.lazyLoad.subscribe((children) => {
-            this.tree.children = children;
-            const event: LoadChildren<T> = {
-              node: this.tree,
-              children,
-              type: NodeEventType.LOAD_CHILDREN,
-            };
-
-            this.event.emit(event);
-          });
-        }
-      }
-
-      this.collapsibleToggle.emit(this.tree);
     }
   }
 
