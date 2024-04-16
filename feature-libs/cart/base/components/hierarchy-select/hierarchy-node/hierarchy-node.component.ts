@@ -1,5 +1,5 @@
 /**
- * 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * 2024 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
 import {
@@ -39,8 +39,6 @@ export class HierarchyNodeComponent<T> implements OnInit, OnChanges {
 
   /** How much padding the parent says this node should have */
   @Input() paddingPrefix = 0;
-
-  aliasPaddingPrefix = 0;
 
   /** How much further (in px) this element should be indented under the parent. */
   paddingLeft = 10;

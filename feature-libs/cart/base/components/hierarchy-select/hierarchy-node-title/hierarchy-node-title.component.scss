@@ -1,12 +1,4 @@
-// @import 'src/styles/helpers/_variables.scss';
-
 .cx-hierarchy-node.title {
-  // &. {
-  // 	// line-height: 19px;
-  // 	// font-size: 10px;
-  // 	// text-align: left;
-  // 	// color: #757575;
-  // }
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,9 +6,6 @@
   font-size: 16px;
   font-weight: 600;
   background: var(--cx-color-inverse);
-//   .node-title {
-//     font-weight: 600;
-//   }
 
   .node-edit {
     color: var(--Main-Primary, #2480c5);

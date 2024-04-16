@@ -1,11 +1,11 @@
 /**
- * 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * 2024 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
 import { Component, inject } from '@angular/core';
 import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.component';
 import { TitleNode } from '../title-node.model';
-import { ActiveCartFacade } from 'feature-libs/cart/base/root/facade/active-cart.facade';
+import { ActiveCartFacade } from '@spartacus/cart/base/root';
 
 /**
  * Hierarchy Selection node variant to show a title
@@ -13,18 +13,11 @@ import { ActiveCartFacade } from 'feature-libs/cart/base/root/facade/active-cart
 @Component({
   selector: 'cx-hierarchy-title',
   template: `
-    <div class="cx-hierarchy-node title"
-      [style.padding-left.px]="paddingPrefix"
-      [title]="tree.tooltip"
-      matTooltipPosition="right"
-      matTooltipShowDelay="1200"
-    >
+    <div class="cx-hierarchy-node title">
       <span class="node-title">{{ tree.name }}</span>
-      
       <button (click)="removeBundle(tree.value.entryGroupNumber)" class="btn btn-tertiary" type="button">
         {{ 'common.remove' | cxTranslate }}
       </button>
-
     </div>
   `,
   styleUrls: [

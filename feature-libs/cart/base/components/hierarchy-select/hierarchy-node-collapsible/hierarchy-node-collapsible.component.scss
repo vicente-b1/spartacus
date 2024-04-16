@@ -1,5 +1,3 @@
-// @import 'src/styles/helpers/_module';
-
 :host {
   > cx-hierarchy-node {
     display: none;
@@ -23,18 +21,11 @@
   cursor: pointer;
   user-select: none;
   outline: none;
-
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-right: 12px;
   font-size: 14px;
-
-  &.draggable {
-    &:hover:not(:active) {
-      background-color: #eeeeee;
-    }
-  }
 
   .tree-icon {
     color: var(--Main-Secondary, #a1aabf);

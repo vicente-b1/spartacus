@@ -13,7 +13,6 @@
 }
 
 .cx-hierarchy-node {
-	// @include text-small;
 	line-height: math.div(16px, 12px);
 	font-size: #{math.div(12px, 14px)}rem;
 
@@ -22,8 +21,4 @@
 	box-sizing: border-box;
 	overflow: hidden;
 	line-height: 2.33;
-
-	&.drop-disabled {
-		opacity: 0.5;
-	}
 }

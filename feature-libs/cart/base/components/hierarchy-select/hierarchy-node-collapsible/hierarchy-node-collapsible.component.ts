@@ -1,5 +1,5 @@
 /**
- * 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * 2024 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
 import { Component, HostBinding } from '@angular/core';
@@ -17,15 +17,12 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
       class="cx-hierarchy-node collapsible"
       [style.padding-left.px]="paddingPrefix"
       (click)="toggle()"
-      [title]="tree.tooltip"
     >
       <span class="leaf-node-title">{{ tree.name }}</span>
-
       <button *ngIf="tree.children.length === 0; else noneLeafNode"
         (click)="editBundle(tree.value.entryGroupNumber)" class="btn btn-tertiary" type="button">
         {{ 'common.edit' | cxTranslate }}
       </button>
-
     </div>
     <cx-hierarchy-node
       *ngFor="let child of tree.children; let i = index"
@@ -39,16 +36,6 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
         [items]="this.tree.value.entries!"
         [hasHeader]="false"
       ></cx-cart-item-list>
-
-      <!-- <ng-template
-          [cxOutlet]="cartOutlets.CART_ITEM_LIST"
-          [cxOutletContext]="{
-            items: this.tree.value.entries!,
-            hasHeader:false
-          }"
-        >
-        </ng-template> -->
-
     </ng-container>
     <ng-template #noneLeafNode>
       <div *ngIf="!open" class="tree-icon">
