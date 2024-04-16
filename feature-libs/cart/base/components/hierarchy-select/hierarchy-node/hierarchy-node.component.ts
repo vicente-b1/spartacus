@@ -40,16 +40,11 @@ export class HierarchyNodeComponent<T> implements OnInit, OnChanges {
   /** How much padding the parent says this node should have */
   @Input() paddingPrefix = 0;
 
-  aliasPaddingPrefix = 0;
-
   /** How much further (in px) this element should be indented under the parent. */
   paddingLeft = 10;
 
   /** How much further (in px) children should be indented under the parent. */
   childPadding = 10;
-
-  /** Unique ID for the HierarchyNode instance relative to its HierarchySelect instance. */
-  id: string;
 
   /** Node variant type.  Used to select the correct variant node */
   type: string;
