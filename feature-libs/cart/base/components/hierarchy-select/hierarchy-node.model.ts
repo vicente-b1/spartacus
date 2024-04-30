@@ -10,9 +10,6 @@ import { TemplateRef, Type } from '@angular/core';
 export class HierarchyNode<T = any, F = any> {
   children: Array<HierarchyNode> = [];
   disabled = false;
-  /** Unique dropzone relative to this node's parent's children. */
-  dropzone = '';
-  tooltip = '';
   hidden = false;
   value?: T;
   parent?: HierarchyNode;
@@ -24,8 +21,6 @@ export class HierarchyNode<T = any, F = any> {
     {
       children = [],
       disabled = false,
-      dropzone = '',
-      tooltip = '',
       hidden = false,
       value,
       parent,
@@ -34,8 +29,6 @@ export class HierarchyNode<T = any, F = any> {
   ) {
     this.children = children;
     this.disabled = disabled;
-    this.dropzone = dropzone;
-    this.tooltip = tooltip;
     this.hidden = hidden;
     this.value = value;
     this.parent = parent;
@@ -50,7 +43,5 @@ export class HierarchyNode<T = any, F = any> {
 export const defaultHierarchyNodeArgs: Partial<HierarchyNode> = {
   children: [],
   disabled: false,
-  dropzone: '',
-  tooltip: '',
   hidden: false,
 };

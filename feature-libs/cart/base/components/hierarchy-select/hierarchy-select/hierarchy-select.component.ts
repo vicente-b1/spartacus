@@ -5,9 +5,7 @@
 import {
   Component,
   Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
+  OnInit
 } from '@angular/core';
 import { HierarchyNode } from '../hierarchy-node.model';
 
@@ -19,10 +17,7 @@ import { HierarchyNode } from '../hierarchy-node.model';
   providers: [],
   selector: 'cx-hierarchy-select',
   template: `
-    <div
-      *ngIf="!disabled"
-      [style.border-bottom-width.px]="showBorderBottom ? 1 : 0"
-    >
+    <div *ngIf="!disabled">
       <div class="cx-hierarchy-select" [ngStyle]="hierarchyStyle">
         <cx-hierarchy-node
           *ngFor="let child of tree.children; let i = index"
@@ -34,7 +29,7 @@ import { HierarchyNode } from '../hierarchy-node.model';
   `,
   styleUrls: ['./hierarchy-select.component.scss'],
 })
-export class HierarchySelectComponent implements OnInit, OnChanges {
+export class HierarchySelectComponent implements OnInit {
   /**
    * Defines the maximum height of visible part of the tree.
    */
@@ -52,16 +47,6 @@ export class HierarchySelectComponent implements OnInit, OnChanges {
   @Input() disabled: boolean;
 
   /**
-   * Dropzone name for the root level.
-   */
-  dropzone = 'root-dropzone';
-
-  /**
-   * Flag to show bottom border if there are no children, which would normally provide the bottom line.
-   */
-  showBorderBottom = true;
-
-  /**
    * Defines the styling object applied to the hierarchy tree.
    * Note:
    * - used to provide maxHeight property from consumer.
@@ -72,23 +57,11 @@ export class HierarchySelectComponent implements OnInit, OnChanges {
   };
 
   ngOnInit(): void {
-    this.calculateShowBottom();
-
     if (this.maxHeight !== undefined) {
       this.hierarchyStyle = {
         maxHeight: this.maxHeight,
         overflow: 'auto',
       };
     }
-  }
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes.tree) {
-      this.calculateShowBottom();
-    }
-  }
-
-  private calculateShowBottom(): void {
-    this.showBorderBottom = !this.tree || this.tree?.children.length === 0;
   }
 }
