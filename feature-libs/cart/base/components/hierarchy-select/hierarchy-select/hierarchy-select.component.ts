@@ -1,5 +1,5 @@
 /**
- * 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * 2024 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
 import {
@@ -11,7 +11,6 @@ import { HierarchyNode } from '../hierarchy-node.model';
 
 /**
  * Selector component that displays a tree-based model.
- * Also provides an optional search field to search through the tree.
  */
 @Component({
   providers: [],

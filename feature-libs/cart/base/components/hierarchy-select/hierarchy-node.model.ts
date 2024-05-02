@@ -1,5 +1,5 @@
 /**
- * 2021 SAP SE or an SAP affiliate company. All rights reserved.
+ * 2024 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
 import { TemplateRef, Type } from '@angular/core';
@@ -13,7 +13,6 @@ export class HierarchyNode<T = any, F = any> {
   hidden = false;
   value?: T;
   parent?: HierarchyNode;
-  // contentTemplate?: Type<F> | TemplateRef<{ $implicit: TemplateContext }>;
   contentTemplate?: Type<F> | TemplateRef<HierarchyNode<T>>;
 
   constructor(
