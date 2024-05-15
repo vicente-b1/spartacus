@@ -18,7 +18,6 @@ import { CartCouponModule } from '../cart-coupon/cart-coupon.module';
 import { CartSharedModule } from '../cart-shared/cart-shared.module';
 import { CartDetailsComponent } from './cart-details.component';
 import { CartValidationWarningsModule } from '../validation/cart-warnings/cart-validation-warnings.module';
-import { HierarchySelectModule } from '../hierarchy-select/hierarchy-select.module';
 
 @NgModule({
   imports: [
@@ -30,7 +29,9 @@ import { HierarchySelectModule } from '../hierarchy-select/hierarchy-select.modu
     PromotionsModule,
     I18nModule,
     CartValidationWarningsModule,
-    HierarchySelectModule
+    // HierarchySelectModule
+    // HierarchyModule
+    // CardModule
   ],
   providers: [
     provideDefaultConfig(<CmsConfig>{

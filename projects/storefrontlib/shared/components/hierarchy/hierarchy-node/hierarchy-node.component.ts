@@ -11,9 +11,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
-import { CollapsibleNode } from '../index';
-import { HierarchyNode } from '../hierarchy-node.model';
-import { TitleNode } from '../title-node.model';
+import { CollapsibleNode, HierarchyNode, TitleNode } from '../index';
+
 @Component({
   selector: 'cx-hierarchy-node',
   template: `

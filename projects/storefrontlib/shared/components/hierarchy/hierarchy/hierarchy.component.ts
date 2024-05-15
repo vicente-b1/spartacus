@@ -14,10 +14,10 @@ import { HierarchyNode } from '../hierarchy-node.model';
  */
 @Component({
   providers: [],
-  selector: 'cx-hierarchy-select',
+  selector: 'cx-hierarchy',
   template: `
     <div *ngIf="!disabled">
-      <div class="cx-hierarchy-select" [ngStyle]="hierarchyStyle">
+      <div class="cx-hierarchy" [ngStyle]="hierarchyStyle">
         <cx-hierarchy-node
           *ngFor="let child of tree.children; let i = index"
           [tree]="child"
@@ -26,9 +26,9 @@ import { HierarchyNode } from '../hierarchy-node.model';
       </div>
     </div>
   `,
-  styleUrls: ['./hierarchy-select.component.scss'],
+  styleUrls: ['./hierarchy.component.scss'],
 })
-export class HierarchySelectComponent implements OnInit {
+export class HierarchyComponent implements OnInit {
   /**
    * Defines the maximum height of visible part of the tree.
    */

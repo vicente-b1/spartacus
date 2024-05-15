@@ -1,5 +1,6 @@
 <ng-container *ngIf="cart$ | async as cart">
-  <ng-container *ngIf="{entries: entries$ | async, entryGroups: entryGroups$ | async, standaloneEntries: standaloneEntries$ | async, bundle: entries$ | async} as data">
+  <!-- <ng-container *ngIf="{entries: entries$ | async, entryGroups: entryGroups$ | async, standaloneEntries: standaloneEntries$ | async, bundle: entries$ | async} as data"> -->
+    <ng-container *ngIf="{entries: entries$ | async, standaloneEntries: standaloneEntries$ | async} as data">
     <div *ngIf="cart.totalItems > 0" class="cart-details-wrapper">
       <cx-cart-validation-warnings></cx-cart-validation-warnings>
 
@@ -15,7 +16,7 @@
         "
       ></cx-promotions>
 
-      <cx-cart-item-list
+       <cx-cart-item-list
         [items]="data.standaloneEntries"
         [cartIsLoading]="!(cartLoaded$ | async)"
         [promotionLocation]="promotionLocation"
@@ -25,13 +26,14 @@
         }"
         [ngClass]="!data.standaloneEntries ? 'emptyList' : 'noneEmptyList'"
       ></cx-cart-item-list>
-      <ng-container *ngFor="let bundle of bundles$ | async">
-          <cx-hierarchy-select 
-            [paddingPrefix]="12" 
-            [tree]="bundle" 
-          > 
-          </cx-hierarchy-select>
-      </ng-container>
+      <!-- <ng-container *ngFor="let bundle of bundles$ | async">
+
+          <cx-hierarchy 
+          [paddingPrefix]="12" 
+          [tree]="bundle" 
+        > 
+        </cx-hierarchy>
+      </ng-container> -->
     </div>
   </ng-container>   
 </ng-container>

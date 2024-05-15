@@ -30,13 +30,13 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
       [paddingPrefix]="childPaddingLeft"
     >
     </cx-hierarchy-node>
-    <ng-container *ngIf="tree.children.length === 0">
+    <!-- <ng-container *ngIf="tree.children.length === 0">
       <cx-cart-item-list
         *ngIf="tree.value.entries.length > 0"
         [items]="this.tree.value.entries!"
         [hasHeader]="false"
       ></cx-cart-item-list>
-    </ng-container>
+    </ng-container> -->
     <ng-template #noneLeafNode>
       <div *ngIf="!open" class="tree-icon">
         <cx-icon type="EXPAND"></cx-icon>
