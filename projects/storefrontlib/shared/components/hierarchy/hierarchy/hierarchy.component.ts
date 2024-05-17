@@ -7,7 +7,7 @@ import {
   Input,
   OnInit
 } from '@angular/core';
-import { HierarchyNode } from '../hierarchy-node.model';
+import { HierarchyNode } from '../hierarchy-node/hierarchy-node.model';
 
 /**
  * Selector component that displays a tree-based model.
@@ -24,6 +24,8 @@ import { HierarchyNode } from '../hierarchy-node.model';
           [paddingPrefix]="paddingPrefix"
         ></cx-hierarchy-node>
       </div>
+
+      <ng-content></ng-content>
     </div>
   `,
   styleUrls: ['./hierarchy.component.scss'],

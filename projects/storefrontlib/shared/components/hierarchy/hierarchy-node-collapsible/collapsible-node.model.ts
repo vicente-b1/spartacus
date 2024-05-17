@@ -5,7 +5,7 @@
 import {
   HierarchyNode,
   defaultHierarchyNodeArgs,
-} from './hierarchy-node.model';
+} from '../hierarchy-node/hierarchy-node.model';
 
 /**
  * Collapsible-type node in a Hierarchy Select tree

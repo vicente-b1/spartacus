@@ -5,7 +5,7 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA, Pipe, PipeTransform } from '@angular/core';
 
-import { CollapsibleNode } from '../collapsible-node.model';
+import { CollapsibleNode } from './collapsible-node.model';
 import { HierarchyNodeCollapsibleComponent } from './hierarchy-node-collapsible.component';
 
 @Pipe({ name: 'cxTranslate' })

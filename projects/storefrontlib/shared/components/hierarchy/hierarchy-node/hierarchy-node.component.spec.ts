@@ -5,9 +5,9 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 
-import { CollapsibleNode } from '../collapsible-node.model';
-import { HierarchyNode } from '../hierarchy-node.model';
-import { TitleNode } from '../title-node.model';
+import { CollapsibleNode } from '../hierarchy-node-collapsible/collapsible-node.model';
+import { HierarchyNode } from './hierarchy-node.model';
+import { TitleNode } from '../hierarchy-node-title/title-node.model';
 import { HierarchyNodeComponent } from './hierarchy-node.component';
 
 describe('HierarchyNodeComponent', () => {

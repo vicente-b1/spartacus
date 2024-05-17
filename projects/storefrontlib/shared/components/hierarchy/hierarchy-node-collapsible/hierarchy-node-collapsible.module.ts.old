@@ -1,0 +1,37 @@
+/**
+ * 2024 SAP SE or an SAP affiliate company. All rights reserved.
+ */
+
+import { CommonModule } from '@angular/common';
+// import { FormsModule } from '@angular/forms';
+import { NgModule } from '@angular/core';
+// import { IconModule } from '@spartacus/storefront';
+import { HierarchyNodeCollapsibleComponent } from './hierarchy-node-collapsible.component';
+// import { HierarchyNodeTitleComponent } from './hierarchy-node-title/hierarchy-node-title.component';
+// import { HierarchyComponent } from './hierarchy/hierarchy.component';
+import { I18nModule } from '@spartacus/core';
+import { HierarchyModule } from '..';
+import { IconModule } from 'projects/storefrontlib/cms-components/misc/icon/icon.module';
+import { CartSharedModule } from "../../../../../../feature-libs/cart/base/components/cart-shared/cart-shared.module";
+// import { IconModule } from 'projects/storefrontlib/cms-components/misc/icon/icon.module';
+// import { CartSharedModule } from '@spartacus/cart/base/components';
+// import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.component';
+
+@NgModule({
+    exports: [
+        HierarchyNodeCollapsibleComponent,
+    ],
+    declarations: [
+        HierarchyNodeCollapsibleComponent,
+    ],
+    imports: [
+        CommonModule,
+        // FormsModule,
+        IconModule,
+        I18nModule,
+        // CartSharedModule,
+        HierarchyModule,
+        CartSharedModule
+    ]
+})
+export class HierarchyNodeCollapsibleModule {}

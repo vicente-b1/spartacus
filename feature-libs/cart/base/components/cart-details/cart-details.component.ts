@@ -10,14 +10,15 @@ import {
   ActiveCartFacade,
   Cart,
   OrderEntry,
-  // OrderEntryGroup,
+  OrderEntryGroup,
   PromotionLocation,
   SelectiveCartFacade,
 } from '@spartacus/cart/base/root';
+import { CollapsibleNode, HierarchyNode, TitleNode} from '@spartacus/storefront';
 import { AuthService, RoutingService } from '@spartacus/core';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-
+// import { CollapsibleNode, HierarchyNode, TitleNode } from 'projects/storefrontlib/shared/components/hierarchy';
 // import {
 //   CollapsibleNode,
 //   HierarchyNode,
@@ -37,9 +38,9 @@ export class CartDetailsComponent implements OnInit {
   loggedIn = false;
   promotionLocation: PromotionLocation = PromotionLocation.ActiveCart;
   selectiveCartEnabled: boolean;
-  // bundles$: Observable<CollapsibleNode[]>;
+  bundles$: Observable<CollapsibleNode[]>;
 
-  // entryGroups$: Observable<OrderEntryGroup[]>;
+  entryGroups$: Observable<OrderEntryGroup[]>;
 
   constructor(
     protected activeCartService: ActiveCartFacade,
@@ -60,18 +61,18 @@ export class CartDetailsComponent implements OnInit {
       .getStandaloneEntries()
       .pipe(filter((entries) => entries.length > 0));
 
-    // this.bundles$ = this.activeCartService.getBundleEntryGroups().pipe(
-    //   filter((groups) => groups.length > 0),
-    //   map((entryGroups) =>
-    //     entryGroups.map((entryGroup) => {
-    //       const root = new CollapsibleNode('ROOT', {
-    //         children: [],
-    //       });
-    //       this.prepareBundle([entryGroup], root);
-    //       return root;
-    //     })
-    //   )
-    // );
+    this.bundles$ = this.activeCartService.getBundleEntryGroups().pipe(
+      filter((groups) => groups.length > 0),
+      map((entryGroups) =>
+        entryGroups.map((entryGroup) => {
+          const root = new CollapsibleNode('ROOT', {
+            children: [],
+          });
+          this.prepareBundle([entryGroup], root);
+          return root;
+        })
+      )
+    );
 
     this.selectiveCartEnabled = this.cartConfig.isSelectiveCartEnabled();
 
@@ -91,35 +92,35 @@ export class CartDetailsComponent implements OnInit {
     );
   }
 
-  // prepareBundle(
-  //   nodes: OrderEntryGroup[],
-  //   parent: HierarchyNode,
-  //   count: number = 0
-  // ): void {
-  //   let treeNode: HierarchyNode<any, any>;
-  //   nodes.forEach((node) => {
-  //     if (count === 0) {
-  //       treeNode = new TitleNode(node.label, {
-  //         children: [],
-  //         value: node,
-  //       });
+  prepareBundle(
+    nodes: OrderEntryGroup[],
+    parent: HierarchyNode,
+    count: number = 0
+  ): void {
+    let treeNode: HierarchyNode<any, any>;
+    nodes.forEach((node) => {
+      if (count === 0) {
+        treeNode = new TitleNode(node.label, {
+          children: [],
+          value: node,
+        });
 
-  //       parent.children.push(treeNode);
-  //       treeNode = parent;
-  //     } else {
-  //       treeNode = new CollapsibleNode(node.label, {
-  //         children: [],
-  //         value: node,
-  //         open: true,
-  //       });
-  //       parent.children.push(treeNode);
-  //     }
-  //     count++;
-  //     node.entryGroups && node.entryGroups.length > 0
-  //       ? this.prepareBundle(node.entryGroups, treeNode, count)
-  //       : [];
-  //   });
-  // }
+        parent.children.push(treeNode);
+        treeNode = parent;
+      } else {
+        treeNode = new CollapsibleNode(node.label, {
+          children: [],
+          value: node,
+          open: true,
+        });
+        parent.children.push(treeNode);
+      }
+      count++;
+      node.entryGroups && node.entryGroups.length > 0
+        ? this.prepareBundle(node.entryGroups, treeNode, count)
+        : [];
+    });
+  }
 
   saveForLater(item: OrderEntry) {
     if (this.loggedIn) {

@@ -4,7 +4,7 @@
 
 import { Component, HostBinding } from '@angular/core';
 
-import { CollapsibleNode } from '../collapsible-node.model';
+import { CollapsibleNode } from './collapsible-node.model';
 import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.component';
 
 /**
@@ -29,7 +29,7 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
       [tree]="child"
       [paddingPrefix]="childPaddingLeft"
     >
-    </cx-hierarchy-node>
+  </cx-hierarchy-node>
     <!-- <ng-container *ngIf="tree.children.length === 0">
       <cx-cart-item-list
         *ngIf="tree.value.entries.length > 0"
@@ -37,6 +37,7 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
         [hasHeader]="false"
       ></cx-cart-item-list>
     </ng-container> -->
+    <ng-content></ng-content>
     <ng-template #noneLeafNode>
       <div *ngIf="!open" class="tree-icon">
         <cx-icon type="EXPAND"></cx-icon>
@@ -57,6 +58,8 @@ export class HierarchyNodeCollapsibleComponent<T>
   childPadding = 20;
 
   tree: CollapsibleNode<T>;
+
+  // readonly cartOutlets = CartOutlets;
 
   @HostBinding('class.open') get open(): boolean {
     return this.tree.open;

@@ -10,8 +10,12 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
+import { HierarchyNode } from './hierarchy-node.model';
+import { TitleNode } from '../hierarchy-node-title/title-node.model';
+import { CollapsibleNode } from '../hierarchy-node-collapsible/collapsible-node.model';
 
-import { CollapsibleNode, HierarchyNode, TitleNode } from '../index';
+
+// import { CollapsibleNode, HierarchyNode, TitleNode } from '../index';
 
 @Component({
   selector: 'cx-hierarchy-node',

@@ -2,10 +2,10 @@
  * 2024 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.component';
-import { TitleNode } from '../title-node.model';
-import { ActiveCartFacade } from '@spartacus/cart/base/root';
+import { TitleNode } from './title-node.model';
+// import { ActiveCartFacade } from '@spartacus/cart/base/root';
 
 /**
  * Hierarchy Selection node variant to show a title
@@ -27,9 +27,10 @@ import { ActiveCartFacade } from '@spartacus/cart/base/root';
 })
 export class HierarchyNodeTitleComponent<T> extends HierarchyNodeComponent<T> {
   tree: TitleNode;
-  activeCartService: ActiveCartFacade = inject(ActiveCartFacade);
+  // activeCartService: ActiveCartFacade = inject(ActiveCartFacade);
 
   removeBundle(entryGroupNumber: number) {
-    this.activeCartService.removeEntryGroup(entryGroupNumber);
+    // this.activeCartService.removeEntryGroup(entryGroupNumber);
+    console.log('removeBundle in ' + entryGroupNumber);
   }
 }

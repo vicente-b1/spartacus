@@ -13,11 +13,12 @@ import {
   provideDefaultConfig,
   UrlModule,
 } from '@spartacus/core';
-import { PromotionsModule } from '@spartacus/storefront';
+import { PromotionsModule, HierarchyModule } from '@spartacus/storefront';
 import { CartCouponModule } from '../cart-coupon/cart-coupon.module';
 import { CartSharedModule } from '../cart-shared/cart-shared.module';
 import { CartDetailsComponent } from './cart-details.component';
 import { CartValidationWarningsModule } from '../validation/cart-warnings/cart-validation-warnings.module';
+
 
 @NgModule({
   imports: [
@@ -29,9 +30,7 @@ import { CartValidationWarningsModule } from '../validation/cart-warnings/cart-v
     PromotionsModule,
     I18nModule,
     CartValidationWarningsModule,
-    // HierarchySelectModule
-    // HierarchyModule
-    // CardModule
+    HierarchyModule,
   ],
   providers: [
     provideDefaultConfig(<CmsConfig>{
