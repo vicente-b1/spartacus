@@ -316,6 +316,7 @@ if (environment.estimatedDeliveryDate) {
         a11yEmptyWishlistHeading: true,
         a11yUseButtonsForBtnLinks: true,
         a11yFacetsDialogFocusHandling: true,
+        productCarouselUseBatchApi: true,
       };
       return appFeatureToggles;
     }),

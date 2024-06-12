@@ -285,6 +285,11 @@ export interface FeatureTogglesInterface {
    * New "Back To Results" button is added
    */
   a11yFacetsDialogFocusHandling?: boolean;
+
+  /**
+   * In `ProductCarouselComponent` it uses the batch API to load products.
+   */
+  productCarouselUseBatchApi?: boolean;
 }
 
 export const defaultFeatureToggles: Required<FeatureTogglesInterface> = {
@@ -335,4 +340,5 @@ export const defaultFeatureToggles: Required<FeatureTogglesInterface> = {
   a11yEmptyWishlistHeading: false,
   a11yUseButtonsForBtnLinks: false,
   a11yFacetsDialogFocusHandling: false,
+  productCarouselUseBatchApi: false,
 };
