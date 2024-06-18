@@ -312,9 +312,15 @@ export interface FeatureTogglesInterface {
   /**
    * When enabled the button-like UI elements will use `<button>` under the hood instead of `<a>`
    * in the following components: `AddedToCartDialogComponent`, `ForgotPasswordComponent`,
-   * `LoginRegisterComponent`, `ConfigureProductComponent`
+   * `LoginRegisterComponent`, `ConfigureProductComponent`, `AnonymousConsentDialogComponent`
    */
   a11yUseButtonsForBtnLinks?: boolean;
+
+  /**
+   * `AnonymousConsentDialogComponent` - after consent was given/withdrawn the notification
+   * will be displayed
+   */
+  a11yNotificationsOnAnonymousConsentChange?: boolean;
 
   /**
    * When enabled disable "Apply" button in promo code component in cart for empty input,
@@ -381,6 +387,7 @@ export const defaultFeatureToggles: Required<FeatureTogglesInterface> = {
   a11yImproveContrast: false,
   a11yEmptyWishlistHeading: false,
   a11yUseButtonsForBtnLinks: false,
+  a11yNotificationsOnAnonymousConsentChange: false,
   a11yDisabledCouponAndQuickOrderActionButtonsInsteadOfRequiredFields: false,
   a11yFacetsDialogFocusHandling: false,
 };
