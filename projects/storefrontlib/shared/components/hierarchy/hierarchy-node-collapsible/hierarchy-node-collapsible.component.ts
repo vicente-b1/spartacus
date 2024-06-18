@@ -2,10 +2,8 @@
  * 2024 SAP SE or an SAP affiliate company. All rights reserved.
  */
 
-import { Component, HostBinding } from '@angular/core';
-
+import { Component, HostBinding, Input, TemplateRef } from '@angular/core';
 import { CollapsibleNode } from './collapsible-node.model';
-import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.component';
 
 /**
  * Hierarchy Selection node variant that is collapsible
@@ -20,24 +18,20 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
     >
       <span class="leaf-node-title">{{ tree.name }}</span>
       <button *ngIf="tree.children.length === 0; else noneLeafNode"
-        (click)="editBundle(tree.value.entryGroupNumber)" class="btn btn-tertiary" type="button">
+        (click)="editBundle(tree.value?.entryGroupNumber)" class="btn btn-tertiary" type="button">
         {{ 'common.edit' | cxTranslate }}
       </button>
     </div>
-    <cx-hierarchy-node
-      *ngFor="let child of tree.children; let i = index"
+    <cx-hierarchy-collapsible
+      *ngFor="let child of collapsibleChildren; let i = index"
       [tree]="child"
       [paddingPrefix]="childPaddingLeft"
+      [template]="template"
     >
-  </cx-hierarchy-node>
-    <!-- <ng-container *ngIf="tree.children.length === 0">
-      <cx-cart-item-list
-        *ngIf="tree.value.entries.length > 0"
-        [items]="this.tree.value.entries!"
-        [hasHeader]="false"
-      ></cx-cart-item-list>
-    </ng-container> -->
-    <ng-content></ng-content>
+    </cx-hierarchy-collapsible>
+    <ng-container *ngIf="tree.children.length === 0 ">
+      <ng-container *ngTemplateOutlet="template; context:{ $implicit: this.tree.value?.entries}"></ng-container>
+    </ng-container>
     <ng-template #noneLeafNode>
       <div *ngIf="!open" class="tree-icon">
         <cx-icon type="EXPAND"></cx-icon>
@@ -48,18 +42,20 @@ import { HierarchyNodeComponent } from '../hierarchy-node/hierarchy-node.compone
     </ng-template>
   `,
   styleUrls: [
-    '../hierarchy-node/hierarchy-node.component.scss',
+    // '../hierarchy-node/hierarchy-node.component.scss',
     './hierarchy-node-collapsible.component.scss',
   ],
 })
-export class HierarchyNodeCollapsibleComponent<T>
-  extends HierarchyNodeComponent<T>
-{
+export class HierarchyNodeCollapsibleComponent<T> {
+  // extends HierarchyNodeComponent<T>
+  /** How much padding the parent says this node should have */
+  @Input() paddingPrefix = 0;
+
+  @Input() template: TemplateRef<any>;
+
+  @Input() tree: CollapsibleNode<T>;
+
   childPadding = 20;
-
-  tree: CollapsibleNode<T>;
-
-  // readonly cartOutlets = CartOutlets;
 
   @HostBinding('class.open') get open(): boolean {
     return this.tree.open;
@@ -71,7 +67,15 @@ export class HierarchyNodeCollapsibleComponent<T>
     }
   }
 
-  editBundle(entryGroupNumber: number) {
+  get childPaddingLeft(): number {
+    return (Number(this.paddingPrefix) || 0) + this.childPadding;
+  }
+
+  get collapsibleChildren(): CollapsibleNode<T>[] {
+    return this.tree.children as CollapsibleNode<T>[];
+  }
+
+  editBundle(entryGroupNumber: any) {
     console.log('editBundle: ', entryGroupNumber);
   }
 }

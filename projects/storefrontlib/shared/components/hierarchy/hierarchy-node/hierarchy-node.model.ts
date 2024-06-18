@@ -11,7 +11,7 @@ export class HierarchyNode<T = any, F = any> {
   children: Array<HierarchyNode> = [];
   disabled = false;
   hidden = false;
-  value?: T;
+  value?: Value;
   parent?: HierarchyNode;
   contentTemplate?: Type<F> | TemplateRef<HierarchyNode<T>>;
 
@@ -43,4 +43,10 @@ export const defaultHierarchyNodeArgs: Partial<HierarchyNode> = {
   children: [],
   disabled: false,
   hidden: false,
+};
+
+// Define a specific type for value to ensure it has entryGroupNumber and entries properties
+export interface Value {
+  entryGroupNumber?: number;
+  entries?: any[];
 };

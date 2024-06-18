@@ -9,13 +9,11 @@ import {
   OnChanges,
   OnInit,
   SimpleChanges,
+  TemplateRef,
 } from '@angular/core';
 import { HierarchyNode } from './hierarchy-node.model';
 import { TitleNode } from '../hierarchy-node-title/title-node.model';
 import { CollapsibleNode } from '../hierarchy-node-collapsible/collapsible-node.model';
-
-
-// import { CollapsibleNode, HierarchyNode, TitleNode } from '../index';
 
 @Component({
   selector: 'cx-hierarchy-node',
@@ -29,8 +27,9 @@ import { CollapsibleNode } from '../hierarchy-node-collapsible/collapsible-node.
       </ng-container>
       <ng-container *ngIf="type === 'COLLAPSIBLE'">
         <cx-hierarchy-collapsible
-          [tree]="tree"
+          [tree]="collasibleTree"
           [paddingPrefix]="childPaddingLeft - childPadding"
+          [template]="template"
         ></cx-hierarchy-collapsible>
       </ng-container>
     </div>
@@ -43,6 +42,8 @@ export class HierarchyNodeComponent<T> implements OnInit, OnChanges {
   /** How much padding the parent says this node should have */
   @Input() paddingPrefix = 0;
 
+  @Input() template: TemplateRef<any>;
+
   /** How much further (in px) this element should be indented under the parent. */
   paddingLeft = 10;
 
@@ -51,6 +52,8 @@ export class HierarchyNodeComponent<T> implements OnInit, OnChanges {
 
   /** Node variant type.  Used to select the correct variant node */
   type: string;
+
+  collasibleTree: CollapsibleNode<T>;
 
   @HostBinding('class.disabled') get disabled(): boolean {
     return this.tree.disabled;
@@ -75,6 +78,7 @@ export class HierarchyNodeComponent<T> implements OnInit, OnChanges {
       this.type = 'TITLE';
     } else if (this.tree instanceof CollapsibleNode) {
       this.type = 'COLLAPSIBLE';
+      this.collasibleTree = this.tree;
     }
   }
 }

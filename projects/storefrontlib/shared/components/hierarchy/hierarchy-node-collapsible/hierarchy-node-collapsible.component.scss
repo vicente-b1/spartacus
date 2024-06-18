@@ -1,11 +1,11 @@
 :host {
-  > cx-hierarchy-node {
+  > cx-hierarchy-collapsible {
     display: none;
   }
 }
 
 :host(.open) {
-  > cx-hierarchy-node {
+  > cx-hierarchy-collapsible {
     display: block;
   }
 }

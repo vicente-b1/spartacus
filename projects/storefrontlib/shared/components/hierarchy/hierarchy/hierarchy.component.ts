@@ -5,7 +5,8 @@
 import {
   Component,
   Input,
-  OnInit
+  OnInit,
+  TemplateRef,
 } from '@angular/core';
 import { HierarchyNode } from '../hierarchy-node/hierarchy-node.model';
 
@@ -22,10 +23,10 @@ import { HierarchyNode } from '../hierarchy-node/hierarchy-node.model';
           *ngFor="let child of tree.children; let i = index"
           [tree]="child"
           [paddingPrefix]="paddingPrefix"
+          [template]="template"
         ></cx-hierarchy-node>
       </div>
 
-      <ng-content></ng-content>
     </div>
   `,
   styleUrls: ['./hierarchy.component.scss'],
@@ -47,6 +48,7 @@ export class HierarchyComponent implements OnInit {
 
   @Input() disabled: boolean;
 
+  @Input() template: TemplateRef<any>;
   /**
    * Defines the styling object applied to the hierarchy tree.
    * Note:

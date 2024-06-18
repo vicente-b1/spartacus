@@ -1,6 +1,4 @@
 <ng-container *ngIf="cart$ | async as cart">
-  <ng-container *ngIf="{entries: entries$ | async, entryGroups: entryGroups$ | async, standaloneEntries: standaloneEntries$ | async, bundle: entries$ | async} as data">
-    <!-- <ng-container *ngIf="{entries: entries$ | async, standaloneEntries: standaloneEntries$ | async} as data"> -->
     <div *ngIf="cart.totalItems > 0" class="cart-details-wrapper">
       <cx-cart-validation-warnings></cx-cart-validation-warnings>
 
@@ -16,26 +14,28 @@
         "
       ></cx-promotions>
 
-       <cx-cart-item-list
-        [items]="data.standaloneEntries"
-        [cartIsLoading]="!(cartLoaded$ | async)"
-        [promotionLocation]="promotionLocation"
-        [options]="{
-          isSaveForLater: false,
-          optionalBtn: saveForLaterBtn
-        }"
-        [ngClass]="!data.standaloneEntries ? 'emptyList' : 'noneEmptyList'"
-      ></cx-cart-item-list>
-      <ng-container *ngFor="let bundle of bundles$ | async">
+      <ng-container *ngIf="standaloneEntries$ | async as standaloneEntries">
 
+        <cx-cart-item-list
+          [items]="standaloneEntries"
+          [cartIsLoading]="!(cartLoaded$ | async)"
+          [promotionLocation]="promotionLocation"
+          [options]="{
+            isSaveForLater: false,
+            optionalBtn: saveForLaterBtn
+          }"
+          [ngClass]="!standaloneEntries ? 'emptyList' : 'noneEmptyList'"
+        ></cx-cart-item-list>
+      </ng-container>
+      <ng-container *ngFor="let bundle of bundles$ | async">
           <cx-hierarchy 
           [paddingPrefix]="12" 
           [tree]="bundle" 
-        > 
+          [template]="bundlesTemplate"
+        >      
         </cx-hierarchy>
       </ng-container>
     </div>
-  </ng-container>   
 </ng-container>
 
 <ng-template let-ctx #saveForLaterBtn>
@@ -48,4 +48,16 @@
   >
     {{ 'saveForLaterItems.saveForLater' | cxTranslate }}
   </button>
+</ng-template>
+
+<ng-template #bundlesTemplate let-items
+>
+  <ng-template 
+  [cxOutlet]="cartOutlets.CART_ITEM_LIST"
+  [cxOutletContext]="{
+    items: items,
+    hasHeader: false,
+  }"
+  >
+  </ng-template>
 </ng-template>

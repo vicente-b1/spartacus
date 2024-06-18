@@ -9,6 +9,7 @@ import { CartConfigService } from '@spartacus/cart/base/core';
 import {
   ActiveCartFacade,
   Cart,
+  CartOutlets,
   OrderEntry,
   OrderEntryGroup,
   PromotionLocation,
@@ -18,12 +19,6 @@ import { CollapsibleNode, HierarchyNode, TitleNode} from '@spartacus/storefront'
 import { AuthService, RoutingService } from '@spartacus/core';
 import { combineLatest, Observable, of } from 'rxjs';
 import { filter, map, tap } from 'rxjs/operators';
-// import { CollapsibleNode, HierarchyNode, TitleNode } from 'projects/storefrontlib/shared/components/hierarchy';
-// import {
-//   CollapsibleNode,
-//   HierarchyNode,
-//   TitleNode,
-// } from '../hierarchy-select';
 
 @Component({
   selector: 'cx-cart-details',
@@ -38,9 +33,11 @@ export class CartDetailsComponent implements OnInit {
   loggedIn = false;
   promotionLocation: PromotionLocation = PromotionLocation.ActiveCart;
   selectiveCartEnabled: boolean;
-  bundles$: Observable<CollapsibleNode[]>;
+  // bundles$: Observable<CollapsibleNode[]>;
+  bundles$: Observable<HierarchyNode[]>;
 
-  entryGroups$: Observable<OrderEntryGroup[]>;
+  // entryGroups$: Observable<OrderEntryGroup[]>;
+  readonly cartOutlets = CartOutlets;
 
   constructor(
     protected activeCartService: ActiveCartFacade,
@@ -53,9 +50,9 @@ export class CartDetailsComponent implements OnInit {
   ngOnInit() {
     this.cart$ = this.activeCartService.getActive();
 
-    this.entries$ = this.activeCartService
-      .getEntries()
-      .pipe(filter((entries) => entries.length > 0));
+    // this.entries$ = this.activeCartService
+    //   .getEntries()
+    //   .pipe(filter((entries) => entries.length > 0));
 
     this.standaloneEntries$ = this.activeCartService
       .getStandaloneEntries()
